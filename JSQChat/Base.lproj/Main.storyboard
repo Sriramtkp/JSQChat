@@ -218,7 +218,7 @@
         <!--Chats-->
         <scene sceneID="Be1-Hp-mdj">
             <objects>
-                <viewController id="AZu-LG-9Zm" sceneMemberID="viewController">
+                <viewController id="AZu-LG-9Zm" customClass="RecentViewController" customModule="JSQChat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="18c-xG-AYC"/>
                         <viewControllerLayoutGuide type="bottom" id="9ew-Uj-bFv"/>
@@ -233,7 +233,7 @@
                                 <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="zWz-cL-baJ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="zWz-cL-baJ" customClass="RecentTableViewCell" customModule="JSQChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="92" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zWz-cL-baJ" id="O9N-RV-cyS">
@@ -272,7 +272,7 @@
                                                         <constraint firstAttribute="width" constant="80" id="r6M-Fb-bBJ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.25098040700000002" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLR-Z9-cZb">
@@ -281,7 +281,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="uF6-P3-i6B"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -305,6 +305,13 @@
                                                 <constraint firstItem="MLR-Z9-cZb" firstAttribute="leading" secondItem="QWo-Rn-wwI" secondAttribute="trailing" constant="13" id="wBn-BJ-QrS"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="avatarImageCell" destination="rCc-5h-SpE" id="z43-HF-QbB"/>
+                                            <outlet property="counterLabel" destination="MLR-Z9-cZb" id="vTc-av-jxV"/>
+                                            <outlet property="lastMessageLabel" destination="QWo-Rn-wwI" id="Izq-gA-Mld"/>
+                                            <outlet property="nameLabel" destination="yz8-lt-5K4" id="Jli-m3-7Ux"/>
+                                            <outlet property="timerLabel" destination="MAz-Ek-zmc" id="O2X-v6-05K"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -318,7 +325,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Chats" id="UJe-wY-ch2">
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="MqX-bx-CJK"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="MqX-bx-CJK">
+                            <connections>
+                                <action selector="startNewChat:" destination="AZu-LG-9Zm" id="d8y-mT-p8I"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pc5-82-TCJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
