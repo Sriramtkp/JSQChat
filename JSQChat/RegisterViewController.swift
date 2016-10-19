@@ -110,6 +110,13 @@ class RegisterViewController: UIViewController {
                 //segure to Recent VC
                 
                 
+                
+                let storyboardID = UIStoryboard(name: "Main", bundle: nil)
+    let chatVC = storyboardID.instantiateViewControllerWithIdentifier("ChatTabBar") as! UITabBarController
+        
+                self.presentViewController(chatVC, animated: true, completion: nil)
+                
+                
         }) { (fault: Fault!) in
             
             print("Server error in loginUser \(fault)")

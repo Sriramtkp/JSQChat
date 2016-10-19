@@ -77,7 +77,10 @@ class LoginViewController: UIViewController {
             print("Logged in")
             //segue to Recent Vc
             
+            let storyboardID = UIStoryboard(name: "Main", bundle: nil)
+            let chatVC = storyboardID.instantiateViewControllerWithIdentifier("ChatTabBar") as! UITabBarController
             
+            self.presentViewController(chatVC, animated: true, completion: nil)
             
         }) { (fault: Fault!) in
             
