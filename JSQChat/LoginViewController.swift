@@ -12,6 +12,13 @@ class LoginViewController: UIViewController {
 
     
     
+    let backEndShrdInstacnce = Backendless.sharedInstance()
+    
+    var emailLVCobj: String?
+    var passwdLVCobj: String?
+    
+    
+    
     @IBOutlet weak var loginTxtFld: UITextField!
     
     @IBOutlet weak var passwordTtFld: UITextField!
@@ -23,6 +30,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
         // Do any additional setup after loading the view.
     }
 
@@ -34,21 +43,78 @@ class LoginViewController: UIViewController {
 
     
     @IBAction func btnLogin(sender: UIBarButtonItem) {
+        if loginTxtFld.text != "" && passwordTtFld.text != ""
+        {
+            
+            self.emailLVCobj = loginTxtFld.text
+            self.passwdLVCobj = passwordTtFld.text
+            
+            loginUserToBackendless(emailLVCobj!, passwdPrm: passwdLVCobj!)
+            
+            
+        }else{
+            //alert
+            //Alert to user inside any action or verification part
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                self.displayAlert("Missing Field(s)", MessageTxt: "Email and Password requiered")
+                
+            })
+
+            
+        }
+        
+    }
+    
+    //MARK: LoginUsr to the Backendless
+    func loginUserToBackendless(emailPrm: String, passwdPrm : String) {
+        
+        backEndShrdInstacnce.userService.login(emailPrm, password: passwdPrm, response: { (user: BackendlessUser!) in
+            
+            self.loginTxtFld.text = ""
+            self.passwordTtFld.text = ""
+            
+            print("Logged in")
+            //segue to Recent Vc
+            
+            
+            
+        }) { (fault: Fault!) in
+            
+            print("Login to Backendless error\(fault)")
+        }
+        
+        
         
         
     }
     
     
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //MARK:  Alert
+    func displayAlert(titleMsg: String, MessageTxt: String) {
+        
+        let alert = UIAlertController(title: titleMsg , message: MessageTxt , preferredStyle: .Alert)
+        
+        let saveAction = UIAlertAction(title: "Ok", style: .Default) {
+            (action: UIAlertAction) -> Void in
+            
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default){
+            (action: UIAlertAction) -> Void in
+        }
+        
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        alert.view.setNeedsLayout()
+        
+        presentViewController(alert, animated: true, completion: nil)
+        
     }
-    */
+    
+    
+    
 
+    
+    
+    
 }
