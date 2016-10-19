@@ -10,11 +10,39 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
 
+    let backendShrdInstance = Backendless.sharedInstance()
+    var currentUser: BackendlessUser?
+    
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        backendShrdInstance.userService.setStayLoggedIn(true)
+        currentUser = backendShrdInstance.userService.currentUser
+        
+        
+        
+        if currentUser != nil {
+            
+            dispatch_async(dispatch_get_main_queue(), {
+             let storyboardID = UIStoryboard(name: "Main", bundle: nil)
+            let chatVC = storyboardID.instantiateViewControllerWithIdentifier("ChatTabBar") as! UITabBarController
+            chatVC.selectedIndex = 0
+            self.presentViewController(chatVC, animated: true, completion: nil)
+                
+            })
+
+        }
+        
+    }
     
     
     
     
+    //Alert to user inside any action or verification part
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -80,6 +80,8 @@ class LoginViewController: UIViewController {
             let storyboardID = UIStoryboard(name: "Main", bundle: nil)
             let chatVC = storyboardID.instantiateViewControllerWithIdentifier("ChatTabBar") as! UITabBarController
             
+            chatVC.selectedIndex = 0
+            
             self.presentViewController(chatVC, animated: true, completion: nil)
             
         }) { (fault: Fault!) in
