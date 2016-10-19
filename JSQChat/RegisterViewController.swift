@@ -107,7 +107,7 @@ class RegisterViewController: UIViewController {
         backendShrdInstance.userService.login(emailObj, password: passwordObj
             , response: { (users: BackendlessUser!) in
                 
-                
+                //segure to Recent VC
                 
                 
         }) { (fault: Fault!) in

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		73A70595011D08DEF8EA0D16 /* Pods_JSQChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DBC5C186E4FDBFB9FABBCA5 /* Pods_JSQChat.framework */; };
 		D94379DD1DB65B0400268EEA /* BackendlessSub-Bridging-Header.m in Sources */ = {isa = PBXBuildFile; fileRef = D94379DC1DB65B0400268EEA /* BackendlessSub-Bridging-Header.m */; };
+		D953B1C71DB781D200DE746C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D953B1C61DB781D200DE746C /* GoogleService-Info.plist */; };
 		D9A09BCF1DB69248002F8622 /* JSQMessagesViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A09BCE1DB69248002F8622 /* JSQMessagesViewController.framework */; };
 		D9A09BD11DB6924D002F8622 /* DACircularProgress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A09BD01DB6924D002F8622 /* DACircularProgress.framework */; };
 		D9A09BD71DB69257002F8622 /* IDMPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A09BD21DB69257002F8622 /* IDMPhotoBrowser.framework */; };
@@ -16,7 +17,6 @@
 		D9A09BD91DB69257002F8622 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A09BD41DB69257002F8622 /* MBProgressHUD.framework */; };
 		D9A09BDA1DB69257002F8622 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A09BD51DB69257002F8622 /* pop.framework */; };
 		D9A09BDB1DB69257002F8622 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A09BD61DB69257002F8622 /* SDWebImage.framework */; };
-		D9A09BDD1DB69751002F8622 /* GoogleService-Info in Resources */ = {isa = PBXBuildFile; fileRef = D9A09BDC1DB69751002F8622 /* GoogleService-Info */; };
 		D9A09BE21DB69AEF002F8622 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D9A09BDF1DB69AEF002F8622 /* ProgressHUD.bundle */; };
 		D9A09BE31DB69AEF002F8622 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A09BE11DB69AEF002F8622 /* ProgressHUD.m */; };
 		D9A09BE51DB69E61002F8622 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A09BE41DB69E61002F8622 /* WelcomeViewController.swift */; };
@@ -52,6 +52,7 @@
 		1D59B61F49034952B0B4EEA4 /* Pods-JSQChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSQChat/Pods-JSQChat.debug.xcconfig"; sourceTree = "<group>"; };
 		1DBC5C186E4FDBFB9FABBCA5 /* Pods_JSQChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSQChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94379DC1DB65B0400268EEA /* BackendlessSub-Bridging-Header.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BackendlessSub-Bridging-Header.m"; sourceTree = "<group>"; };
+		D953B1C61DB781D200DE746C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D9A09BCE1DB69248002F8622 /* JSQMessagesViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQMessagesViewController.framework; path = "Pods/../build/Release-iphoneos/JSQMessagesViewController.framework"; sourceTree = "<group>"; };
 		D9A09BD01DB6924D002F8622 /* DACircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DACircularProgress.framework; path = "Pods/../build/Debug-iphoneos/DACircularProgress.framework"; sourceTree = "<group>"; };
 		D9A09BD21DB69257002F8622 /* IDMPhotoBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDMPhotoBrowser.framework; path = "Pods/../build/Debug-iphoneos/IDMPhotoBrowser.framework"; sourceTree = "<group>"; };
@@ -59,7 +60,6 @@
 		D9A09BD41DB69257002F8622 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = "Pods/../build/Debug-iphoneos/MBProgressHUD.framework"; sourceTree = "<group>"; };
 		D9A09BD51DB69257002F8622 /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = "Pods/../build/Debug-iphoneos/pop.framework"; sourceTree = "<group>"; };
 		D9A09BD61DB69257002F8622 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = "Pods/../build/Debug-iphoneos/SDWebImage.framework"; sourceTree = "<group>"; };
-		D9A09BDC1DB69751002F8622 /* GoogleService-Info */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "GoogleService-Info"; sourceTree = "<group>"; };
 		D9A09BDF1DB69AEF002F8622 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
 		D9A09BE01DB69AEF002F8622 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
 		D9A09BE11DB69AEF002F8622 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 				D9DC43541DB6325B008F2481 /* Assets.xcassets */,
 				D9DC43561DB6325B008F2481 /* LaunchScreen.storyboard */,
 				D9DC43591DB6325B008F2481 /* Info.plist */,
-				D9A09BDC1DB69751002F8622 /* GoogleService-Info */,
+				D953B1C61DB781D200DE746C /* GoogleService-Info.plist */,
 				D94379DC1DB65B0400268EEA /* BackendlessSub-Bridging-Header.m */,
 			);
 			path = JSQChat;
@@ -324,8 +324,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9DC43581DB6325B008F2481 /* LaunchScreen.storyboard in Resources */,
-				D9A09BDD1DB69751002F8622 /* GoogleService-Info in Resources */,
 				D9DC43551DB6325B008F2481 /* Assets.xcassets in Resources */,
+				D953B1C71DB781D200DE746C /* GoogleService-Info.plist in Resources */,
 				D9A09BE21DB69AEF002F8622 /* ProgressHUD.bundle in Resources */,
 				D9DC43531DB6325B008F2481 /* Main.storyboard in Resources */,
 			);
