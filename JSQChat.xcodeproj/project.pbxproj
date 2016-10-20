@@ -10,6 +10,8 @@
 		73A70595011D08DEF8EA0D16 /* Pods_JSQChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DBC5C186E4FDBFB9FABBCA5 /* Pods_JSQChat.framework */; };
 		D94379DD1DB65B0400268EEA /* BackendlessSub-Bridging-Header.m in Sources */ = {isa = PBXBuildFile; fileRef = D94379DC1DB65B0400268EEA /* BackendlessSub-Bridging-Header.m */; };
 		D953B1C71DB781D200DE746C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D953B1C61DB781D200DE746C /* GoogleService-Info.plist */; };
+		D953B1C91DB796C500DE746C /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D953B1C81DB796C500DE746C /* RecentTableViewCell.swift */; };
+		D953B1CB1DB797C700DE746C /* RecentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D953B1CA1DB797C700DE746C /* RecentViewController.swift */; };
 		D9A09BCF1DB69248002F8622 /* JSQMessagesViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A09BCE1DB69248002F8622 /* JSQMessagesViewController.framework */; };
 		D9A09BD11DB6924D002F8622 /* DACircularProgress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A09BD01DB6924D002F8622 /* DACircularProgress.framework */; };
 		D9A09BD71DB69257002F8622 /* IDMPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A09BD21DB69257002F8622 /* IDMPhotoBrowser.framework */; };
@@ -53,6 +55,8 @@
 		1DBC5C186E4FDBFB9FABBCA5 /* Pods_JSQChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSQChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94379DC1DB65B0400268EEA /* BackendlessSub-Bridging-Header.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BackendlessSub-Bridging-Header.m"; sourceTree = "<group>"; };
 		D953B1C61DB781D200DE746C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D953B1C81DB796C500DE746C /* RecentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
+		D953B1CA1DB797C700DE746C /* RecentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
 		D9A09BCE1DB69248002F8622 /* JSQMessagesViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQMessagesViewController.framework; path = "Pods/../build/Release-iphoneos/JSQMessagesViewController.framework"; sourceTree = "<group>"; };
 		D9A09BD01DB6924D002F8622 /* DACircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DACircularProgress.framework; path = "Pods/../build/Debug-iphoneos/DACircularProgress.framework"; sourceTree = "<group>"; };
 		D9A09BD21DB69257002F8622 /* IDMPhotoBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDMPhotoBrowser.framework; path = "Pods/../build/Debug-iphoneos/IDMPhotoBrowser.framework"; sourceTree = "<group>"; };
@@ -153,6 +157,8 @@
 				D9A09BE41DB69E61002F8622 /* WelcomeViewController.swift */,
 				D9A09BE71DB69FDA002F8622 /* RegisterViewController.swift */,
 				D9A09BE91DB69FEC002F8622 /* LoginViewController.swift */,
+				D953B1C81DB796C500DE746C /* RecentTableViewCell.swift */,
+				D953B1CA1DB797C700DE746C /* RecentViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -404,6 +410,8 @@
 				D94379DD1DB65B0400268EEA /* BackendlessSub-Bridging-Header.m in Sources */,
 				D9A09BE81DB69FDA002F8622 /* RegisterViewController.swift in Sources */,
 				D9A09BE51DB69E61002F8622 /* WelcomeViewController.swift in Sources */,
+				D953B1C91DB796C500DE746C /* RecentTableViewCell.swift in Sources */,
+				D953B1CB1DB797C700DE746C /* RecentViewController.swift in Sources */,
 				D9A09BE31DB69AEF002F8622 /* ProgressHUD.m in Sources */,
 				D9DC434E1DB6325B008F2481 /* AppDelegate.swift in Sources */,
 			);
