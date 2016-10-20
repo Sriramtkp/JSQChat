@@ -196,6 +196,99 @@
             </objects>
             <point key="canvasLocation" x="1768" y="576"/>
         </scene>
+        <!--Choose User View Controller-->
+        <scene sceneID="2p2-eE-N7F">
+            <objects>
+                <viewController id="TqJ-El-9x8" customClass="ChooseUserViewController" customModule="JSQChat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IkX-ZD-stT"/>
+                        <viewControllerLayoutGuide type="bottom" id="IJ5-ff-vWo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZdJ-qV-iIX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S0D-aL-NSh">
+                                <rect key="frame" x="0.0" y="20" width="600" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TqV-q4-xVh">
+                                        <rect key="frame" x="246" y="14" width="108" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="108" id="Ig2-Dg-XHc"/>
+                                            <constraint firstAttribute="height" constant="21" id="OCP-na-a3w"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNk-27-84a">
+                                        <rect key="frame" x="512" y="10" width="48" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="48" id="1Jp-cF-Pwu"/>
+                                            <constraint firstAttribute="height" constant="30" id="4Bm-ox-4yS"/>
+                                        </constraints>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelBtnPressed:" destination="TqJ-El-9x8" eventType="touchUpInside" id="RrK-sw-OQY"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="eNk-27-84a" secondAttribute="trailing" constant="40" id="2TB-wq-e69"/>
+                                    <constraint firstItem="TqV-q4-xVh" firstAttribute="top" secondItem="S0D-aL-NSh" secondAttribute="top" constant="14" id="PcM-ap-iQ6"/>
+                                    <constraint firstItem="TqV-q4-xVh" firstAttribute="centerX" secondItem="S0D-aL-NSh" secondAttribute="centerX" id="W1C-wI-7js"/>
+                                    <constraint firstItem="eNk-27-84a" firstAttribute="top" secondItem="S0D-aL-NSh" secondAttribute="top" constant="10" id="Z30-4V-LtU"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HJb-Dq-sNb">
+                                <rect key="frame" x="0.0" y="69" width="600" height="531"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="newMessageCell" textLabel="R7F-h9-Zfs" style="IBUITableViewCellStyleDefault" id="9OA-Bb-gPT">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9OA-Bb-gPT" id="P5c-kn-sQa">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R7F-h9-Zfs">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="TqJ-El-9x8" id="1tR-Jc-cRK"/>
+                                    <outlet property="delegate" destination="TqJ-El-9x8" id="ASS-Fx-mPy"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IJ5-ff-vWo" firstAttribute="top" secondItem="HJb-Dq-sNb" secondAttribute="bottom" id="7Zf-Ll-A6E"/>
+                            <constraint firstAttribute="trailing" secondItem="HJb-Dq-sNb" secondAttribute="trailing" id="Ba4-Lh-CsF"/>
+                            <constraint firstAttribute="trailing" secondItem="S0D-aL-NSh" secondAttribute="trailing" id="Ba7-YN-e3R"/>
+                            <constraint firstItem="HJb-Dq-sNb" firstAttribute="leading" secondItem="ZdJ-qV-iIX" secondAttribute="leading" id="Efq-u9-GS2"/>
+                            <constraint firstItem="S0D-aL-NSh" firstAttribute="leading" secondItem="ZdJ-qV-iIX" secondAttribute="leading" id="VEz-9R-fWD"/>
+                            <constraint firstItem="S0D-aL-NSh" firstAttribute="top" secondItem="IkX-ZD-stT" secondAttribute="bottom" id="VO1-u4-KF4"/>
+                            <constraint firstItem="IJ5-ff-vWo" firstAttribute="top" secondItem="S0D-aL-NSh" secondAttribute="bottom" constant="530" id="Wey-er-59D"/>
+                            <constraint firstItem="HJb-Dq-sNb" firstAttribute="top" secondItem="IkX-ZD-stT" secondAttribute="bottom" constant="49" id="itx-Rc-T76"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableViewOutlet" destination="HJb-Dq-sNb" id="cQm-vf-3nk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rfg-Ai-C9V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3358" y="-205"/>
+        </scene>
         <!--Settings-->
         <scene sceneID="D3D-wX-2hG">
             <objects>
@@ -233,7 +326,7 @@
                                 <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="zWz-cL-baJ" customClass="RecentTableViewCell" customModule="JSQChat" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="chatsCell" rowHeight="60" id="zWz-cL-baJ" customClass="RecentTableViewCell" customModule="JSQChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="92" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zWz-cL-baJ" id="O9N-RV-cyS">
@@ -314,6 +407,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="AZu-LG-9Zm" id="Y7b-VS-5NX"/>
+                                    <outlet property="delegate" destination="AZu-LG-9Zm" id="9Va-Eh-gEG"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -331,6 +428,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableViewOutlet" destination="KZV-ug-sJn" id="3H8-ZS-plc"/>
+                        <segue destination="TqJ-El-9x8" kind="presentation" identifier="chatsToChooseUserVC" id="ckg-Wm-Z6f"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pc5-82-TCJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
