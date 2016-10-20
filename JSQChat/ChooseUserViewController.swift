@@ -8,9 +8,18 @@
 
 import UIKit
 
+
+protocol chooseUserToChatVCDelegate {
+    //required func
+    func createChatRoom(users : BackendlessUser)
+    
+}
+
+
 class ChooseUserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var userArray : [BackendlessUser] = []
+    var delegateVar : chooseUserToChatVCDelegate!
     
     
     @IBOutlet weak var tableViewOutlet: UITableView!
@@ -63,7 +72,16 @@ class ChooseUserViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
 
-    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let userObj = userArray[indexPath.row]
+        delegateVar.createChatRoom(userObj)
+        
+        
+        self.tableViewOutlet.deselectRowAtIndexPath(indexPath, animated: true)
+        self.dismissViewControllerAnimated(true, completion: nil)
+
+    }
     
     
     @IBAction func cancelBtnPressed(sender: UIButton) {
@@ -106,9 +124,12 @@ class ChooseUserViewController: UIViewController, UITableViewDelegate, UITableVi
             print("fault in loadusers\(fault)")
         }
         
-        
-        
-    }
+         }
+    
+    
+    
+    
+    
     
     
 // end of ChooseUserViewController
