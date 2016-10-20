@@ -78,8 +78,6 @@ class RecentTableViewCell: UITableViewCell {
         
         timerLabel.text = timeElapsed(secondsObj)
         
-        
-        
     }
     
     //MARK: date,time,seconds

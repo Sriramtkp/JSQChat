@@ -19,6 +19,9 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,8 +34,11 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBAction func startNewChat(sender: UIBarButtonItem) {
      
+        self.performSegueWithIdentifier("chatsToChooseUserVC", sender: self)
+        
         
     }
+    
     
     //MARK: TableView func
     
@@ -42,6 +48,7 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
+
     
    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
@@ -57,14 +64,23 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
 
     
-    /*
+  
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+
+        if segue.identifier == "chatsToChooseUserVC" {
+            
+            let chooseVC = segue.destinationViewController as! ChooseUserViewController
+            
+            
+        }
+        
+        
+        
+        
     }
-    */
+    
 
 }
