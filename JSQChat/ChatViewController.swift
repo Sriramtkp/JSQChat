@@ -7,13 +7,38 @@
 //
 
 import UIKit
+import JSQMessagesViewController
+import JSQMessagesViewController.JSQMessage
 
-class ChatViewController: UIViewController {
+class ChatViewController: JSQMessagesViewController {
 
+    
+//    var messagesArray: [JSQMessages] = []
+    var objectsArray : [NSDictionary] = []
+    var loadedArray : [NSDictionary] = []
+
+    var withUserVar: BackendlessUser?
+    var recentDict: NSDictionary?
+    var chatRoomID: String?
+    
+    let outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
+    
+    let incomingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleRedColor())
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+
+self.senderId = currenntUserObj.objectId
+        self.senderDisplayName = currenntUserObj.name
+    
+        collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
+        collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
+        
+        self.inputToolbar.contentView.textView.placeHolder = "Type New Message"
+        self.inputToolbar.contentView.textView.placeHolderTextColor = UIColor.redColor()
+    
     }
 
     override func didReceiveMemoryWarning() {
