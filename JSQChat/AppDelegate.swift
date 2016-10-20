@@ -20,10 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 let SECRET_KEY = "EC60F383-FC29-8D17-FF8F-6F03F86DD900"
     let VERSION_NO = "v1"
     
-    
-    
     let backendlessAppDelob = Backendless.sharedInstance()
     
+
+    var firRefObj: FIRDatabaseReference!
     
     
     
