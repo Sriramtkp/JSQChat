@@ -8,10 +8,10 @@
 
 import UIKit
 
-class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, chooseUserToChatVCDelegate {
 
     
-    var recents :[NSDictionary] = []
+    var recentsArray :[NSDictionary]!
     
     @IBOutlet weak var tableViewOutlet: UITableView!
     
@@ -20,7 +20,7 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
         // Do any additional setup after loading the view.
         
-        
+        recentsArray = [NSDictionary]()
         
     }
 
@@ -29,7 +29,10 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableViewOutlet.reloadData()
+    }
     
     
     @IBAction func startNewChat(sender: UIBarButtonItem) {
@@ -44,18 +47,15 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return recents.count
+        return recentsArray.count
     }
     
     
-
-    
-   
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         
         let cell = tableView.dequeueReusableCellWithIdentifier("chatsCell", forIndexPath: indexPath) as! RecentTableViewCell
         
-        let recentCellObj = recents[indexPath.row]
+        let recentCellObj = recentsArray[indexPath.row]
         
         cell.bindDataFromCell(recentCellObj)
         
@@ -73,14 +73,39 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if segue.identifier == "chatsToChooseUserVC" {
             
             let chooseVC = segue.destinationViewController as! ChooseUserViewController
+            chooseVC.delegateVar = self
             
+        }
+        if segue.identifier == "chatsToChatScreen" {
+            let indPatObj = sender as! NSIndexPath
+            let chatVCObj = segue.destinationViewController as! ChatViewController
+            
+            let recent = recentsArray[indPatObj.row]
             
         }
         
+    
+    }
+    
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        
+        self.tableViewOutlet.deselectRowAtIndexPath(indexPath, animated: true)
+        self.performSegueWithIdentifier("chatsToChatScreen", sender: self)
         
     }
     
+    //MARK: customProtocol
+    
+    func createChatRoom(users: BackendlessUser) {
+        
+        let chatVCobj = ChatViewController()
+        chatVCobj.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(chatVCobj, animated: true)
+        
+        
+    }
 
 }
