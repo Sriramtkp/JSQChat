@@ -233,7 +233,7 @@
                                 <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="zWz-cL-baJ" customClass="RecentTableViewCell" customModule="JSQChat" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="chatsCell" rowHeight="60" id="zWz-cL-baJ" customClass="RecentTableViewCell" customModule="JSQChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="92" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zWz-cL-baJ" id="O9N-RV-cyS">
@@ -331,6 +331,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableViewOutlet" destination="KZV-ug-sJn" id="3H8-ZS-plc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pc5-82-TCJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

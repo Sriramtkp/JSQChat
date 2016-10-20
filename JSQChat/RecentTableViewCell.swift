@@ -71,7 +71,12 @@ class RecentTableViewCell: UITableViewCell {
         }
         
         //date
-        timerLabel.text = ""
+        
+        let dateObj = dateFormateFunc().dateFromString((recentFromCell["date"] as? String)!)
+        let secondsObj = NSDate().timeIntervalSinceDate(dateObj!)
+        
+        
+        timerLabel.text = timeElapsed(secondsObj)
         
         
         
@@ -112,9 +117,6 @@ class RecentTableViewCell: UITableViewCell {
             elapsedStr = "\(day) \(dayText)"
         }
 
-        
-        
-        
     return elapsedStr!
     }
     

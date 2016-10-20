@@ -8,8 +8,13 @@
 
 import UIKit
 
-class RecentViewController: UIViewController {
+class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    
+    var recents :[NSDictionary] = []
+    
+    @IBOutlet weak var tableViewOutlet: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,13 +30,32 @@ class RecentViewController: UIViewController {
     
     
     @IBAction func startNewChat(sender: UIBarButtonItem) {
-        
-        
-        
+     
         
     }
     
+    //MARK: TableView func
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return recents.count
+    }
+    
+    
+    
+   
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("chatsCell", forIndexPath: indexPath) as! RecentTableViewCell
+        
+        let recentCellObj = recents[indexPath.row]
+        
+        cell.bindDataFromCell(recentCellObj)
+        
+        return cell
+    }
+    
+
     
     /*
     // MARK: - Navigation
