@@ -78,7 +78,7 @@ func createRecent(userIDPrm: String , chatRoomIDPrm : String, membersPrm: [Strin
     
 }
 
-//MARK : CreateRecentItem
+//MARK: CreateRecentItem
 func createRecentNewItem(userIDPrm1: String , chatRoomIDPrm1: String, membersPrm1: [String], withUserUserNamePrm1 : String, withUserUserIDPrm1 : String) {
     
     
@@ -102,12 +102,10 @@ func createRecentNewItem(userIDPrm1: String , chatRoomIDPrm1: String, membersPrm
         
     }
     
-    
-    
 }
 
 
-// Mark : Hekper func only
+// Mark: Hekper func only
 
 private let dateFormateObj = "yyMMddHHmmss"
 
@@ -119,3 +117,39 @@ func dateFormateFunc() -> NSDateFormatter {
     return dateFromatterObj
     
 }
+
+//MARK: deleteRecentItem
+
+func deleteRecentItemFunc(recentDeleteItemDict : NSDictionary ){
+    firRefObj.child("Recent").child((recentDeleteItemDict["recentId"] as? String)!).removeValueWithCompletionBlock { (error, refBlockObj) in
+        
+        if error != nil{
+            print("Error is in delete Recent\(error)")
+        }
+    }
+    
+    
+}
+
+//Restart RecentChat
+
+func restartRecentChatFunc(recentDicRestartFunc : NSDictionary) {
+    
+    for userIdObj in recentDicRestartFunc["memebers"] as! [String] {
+        
+        if userIdObj != currenntUserObj.objectId {
+            
+            createRecent(userIdObj, chatRoomIDPrm: (recentDicRestartFunc["chatRoomID"] as? String)!, membersPrm: recentDicRestartFunc["memebers"] as! [String], withUserUserNamePrm: currenntUserObj.name, withUserUserIDPrm: currenntUserObj.objectId)
+            
+        }
+        
+    }
+    
+    
+    
+}
+
+
+
+
+

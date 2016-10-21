@@ -23,7 +23,6 @@ let SECRET_KEY = "EC60F383-FC29-8D17-FF8F-6F03F86DD900"
     let backendlessAppDelob = Backendless.sharedInstance()
     
 
-    var firRefObj: FIRDatabaseReference!
     
     
     
@@ -37,6 +36,9 @@ let SECRET_KEY = "EC60F383-FC29-8D17-FF8F-6F03F86DD900"
         backendlessAppDelob.initApp(APP_ID, secret: SECRET_KEY, version: VERSION_NO)
         
         FIRDatabase.database().persistenceEnabled = true
+        
+       
+        
         
         return true
     }
