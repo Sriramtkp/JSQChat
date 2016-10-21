@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		73A70595011D08DEF8EA0D16 /* Pods_JSQChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DBC5C186E4FDBFB9FABBCA5 /* Pods_JSQChat.framework */; };
+		D91D51201DBA4C8D003D9860 /* OutgoingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91D511F1DBA4C8D003D9860 /* OutgoingMessage.swift */; };
 		D92023221DB8D74B004D00F4 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92023211DB8D74B004D00F4 /* Recent.swift */; };
 		D92023241DB8E77E004D00F4 /* ChooseUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92023231DB8E77E004D00F4 /* ChooseUserViewController.swift */; };
 		D92023261DB8F8AD004D00F4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92023251DB8F8AD004D00F4 /* ChatViewController.swift */; };
@@ -56,6 +57,7 @@
 		103762554FC4B8EB9BE60F13 /* Pods-JSQChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSQChat/Pods-JSQChat.release.xcconfig"; sourceTree = "<group>"; };
 		1D59B61F49034952B0B4EEA4 /* Pods-JSQChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSQChat/Pods-JSQChat.debug.xcconfig"; sourceTree = "<group>"; };
 		1DBC5C186E4FDBFB9FABBCA5 /* Pods_JSQChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSQChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D91D511F1DBA4C8D003D9860 /* OutgoingMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingMessage.swift; sourceTree = "<group>"; };
 		D92023211DB8D74B004D00F4 /* Recent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
 		D92023231DB8E77E004D00F4 /* ChooseUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseUserViewController.swift; sourceTree = "<group>"; };
 		D92023251DB8F8AD004D00F4 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -147,6 +149,24 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D91D511D1DBA4C24003D9860 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				D92023211DB8D74B004D00F4 /* Recent.swift */,
+				D91D511F1DBA4C8D003D9860 /* OutgoingMessage.swift */,
+			);
+			name = Modal;
+			sourceTree = "<group>";
+		};
+		D91D511E1DBA4C5D003D9860 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D9DC43511DB6325B008F2481 /* Main.storyboard */,
+				D9DC43561DB6325B008F2481 /* LaunchScreen.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		D9A09BDE1DB69AEF002F8622 /* ProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,7 +185,6 @@
 				D9A09BE91DB69FEC002F8622 /* LoginViewController.swift */,
 				D953B1C81DB796C500DE746C /* RecentTableViewCell.swift */,
 				D953B1CA1DB797C700DE746C /* RecentViewController.swift */,
-				D92023211DB8D74B004D00F4 /* Recent.swift */,
 				D92023231DB8E77E004D00F4 /* ChooseUserViewController.swift */,
 				D92023251DB8F8AD004D00F4 /* ChatViewController.swift */,
 			);
@@ -199,10 +218,10 @@
 			isa = PBXGroup;
 			children = (
 				D9DC434D1DB6325B008F2481 /* AppDelegate.swift */,
+				D91D511D1DBA4C24003D9860 /* Modal */,
 				D9A09BE61DB69FBD002F8622 /* Controllers */,
-				D9DC43511DB6325B008F2481 /* Main.storyboard */,
+				D91D511E1DBA4C5D003D9860 /* View */,
 				D9DC43541DB6325B008F2481 /* Assets.xcassets */,
-				D9DC43561DB6325B008F2481 /* LaunchScreen.storyboard */,
 				D9DC43591DB6325B008F2481 /* Info.plist */,
 				D953B1C61DB781D200DE746C /* GoogleService-Info.plist */,
 				D94379DC1DB65B0400268EEA /* BackendlessSub-Bridging-Header.m */,
@@ -424,6 +443,7 @@
 				D953B1C91DB796C500DE746C /* RecentTableViewCell.swift in Sources */,
 				D953B1CB1DB797C700DE746C /* RecentViewController.swift in Sources */,
 				D9A09BE31DB69AEF002F8622 /* ProgressHUD.m in Sources */,
+				D91D51201DBA4C8D003D9860 /* OutgoingMessage.swift in Sources */,
 				D92023221DB8D74B004D00F4 /* Recent.swift in Sources */,
 				D9DC434E1DB6325B008F2481 /* AppDelegate.swift in Sources */,
 			);

@@ -107,6 +107,28 @@ self.senderId = currenntUserObj.objectId
         print("Accessory btn pressed")
     }
     
+    
+    
+    //MARK: sendMessage callBackFunc
+    
+    func sendMessageFunc(textPrm: String?, datePrm:NSDate, picturePrm: UIImage?, locationPrm: String? )  {
+        
+        if let text = textPrm {
+         //send message
+            
+        }
+        if let pic = picturePrm {
+            
+        }
+        if let loc = locationPrm {
+            
+        }
+        
+        
+    }
+    
+    
+    
     /*
     // MARK: - Navigation
 
