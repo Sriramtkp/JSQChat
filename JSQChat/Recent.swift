@@ -15,15 +15,15 @@ var firRefObj = FIRDatabase.database().reference()
 
 let backendObj = Backendless.sharedInstance()
 let currenntUserObj = backendObj.userService.currentUser
+//user1 is the Current User
 
 
 //MARK: create ChatRoom
 
 func startChat(user1: BackendlessUser, user2: BackendlessUser) -> String {
     
-    //user1 is the Current User
-    let userID1 : String = user1.objectId
-    let userID2 : String = user2.objectId
+    let userID1: String = user1.objectId
+    let userID2: String = user2.objectId
     
     var chatRoomIdStr: String = ""
     let valueCompareUsers = userID1.compare(userID2).rawValue
@@ -36,7 +36,7 @@ func startChat(user1: BackendlessUser, user2: BackendlessUser) -> String {
         chatRoomIdStr = userID2.stringByAppendingString(userID1)
     }
     
-        let membersLocArr = [user1, user2]
+        let membersLocArr = [userID1, userID2]
     
     //create Recents
     createRecent(userID1, chatRoomIDPrm: chatRoomIdStr, membersPrm: membersLocArr, withUserUserNamePrm: user2.name!, withUserUserIDPrm: userID2)
@@ -48,7 +48,7 @@ func startChat(user1: BackendlessUser, user2: BackendlessUser) -> String {
 }
 
 
-func createRecent(userIDPrm: String , chatRoomIDPrm : String, membersPrm : [String], withUserUserNamePrm : String, withUserUserIDPrm : String) {
+func createRecent(userIDPrm: String , chatRoomIDPrm : String, membersPrm: [String], withUserUserNamePrm : String, withUserUserIDPrm : String) {
     
     
     firRefObj.child("Recent").queryOrderedByChild("chatRoomID").queryEqualToValue(chatRoomIDPrm).observeSingleEventOfType(.Value, withBlock: {snapshot in
@@ -58,7 +58,7 @@ func createRecent(userIDPrm: String , chatRoomIDPrm : String, membersPrm : [Stri
         var createRecentBool = true
         
         if snapshot.exists() {
-            for recentLoop in snapshot.value?.allValues {
+            for recentLoop in (snapshot.value?.allValues)! {
                 //if we already have the Recent along with userId, then we dont want to create Recent
                 if recentLoop["userId"] as! String == userIDPrm  {
                     createRecentBool = false
@@ -79,7 +79,7 @@ func createRecent(userIDPrm: String , chatRoomIDPrm : String, membersPrm : [Stri
 }
 
 //MARK : CreateRecentItem
-func createRecentNewItem(userIDPrm1: String , chatRoomIDPrm1 : String, membersPrm1: [String], withUserUserNamePrm1 : String, withUserUserIDPrm1 : String) {
+func createRecentNewItem(userIDPrm1: String , chatRoomIDPrm1: String, membersPrm1: [String], withUserUserNamePrm1 : String, withUserUserIDPrm1 : String) {
     
     
     let ref = firRefObj.child("Recent").childByAutoId()
