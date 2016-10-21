@@ -53,7 +53,7 @@ class RecentTableViewCell: UITableViewCell {
         dataStoreObj.find(dataQuery, response: { (users: BackendlessCollection!) in
             
             let withUserObj = users.data.first as! BackendlessUser
-            //here withUserObj is to get get Avatar of the user 
+            //here withUserObj is to get get Avatar of the users 
             
             
         }) { (fault: Fault!) in

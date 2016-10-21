@@ -101,14 +101,14 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //MARK: customProtocol
     
-    func createChatRoom(users: BackendlessUser) {
+    func createChatRoom(withUser: BackendlessUser) {
         
         let chatVCobj = ChatViewController()
         chatVCobj.hidesBottomBarWhenPushed = true
         
         navigationController?.pushViewController(chatVCobj, animated: true)
         chatVCobj.withUserVar = withUser
-        chatVCobj.chatRoomID = 
+        chatVCobj.chatRoomID =  startChat(backendObj.userService.currentUser, user2: withUser)
         
     }
 
