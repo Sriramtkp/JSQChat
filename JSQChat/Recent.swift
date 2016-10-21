@@ -128,10 +128,9 @@ func deleteRecentItemFunc(recentDeleteItemDict : NSDictionary ){
         }
     }
     
-    
 }
 
-//Restart RecentChat
+//MARK:Restart RecentChat
 
 func restartRecentChatFunc(recentDicRestartFunc : NSDictionary) {
     
@@ -140,14 +139,59 @@ func restartRecentChatFunc(recentDicRestartFunc : NSDictionary) {
         if userIdObj != currenntUserObj.objectId {
             
             createRecent(userIdObj, chatRoomIDPrm: (recentDicRestartFunc["chatRoomID"] as? String)!, membersPrm: recentDicRestartFunc["memebers"] as! [String], withUserUserNamePrm: currenntUserObj.name, withUserUserIDPrm: currenntUserObj.objectId)
-            
         }
         
     }
     
+}
+
+//MARK: updateRecent
+
+func updateRecentFunc(chatRoomIDPrm: String, lastMessagePrm: String) {
+    
+    firRefObj.child("Recent").queryOrderedByChild("chatRoomID").queryEqualToValue(chatRoomIDPrm).observeSingleEventOfType(.Value, withBlock: {
+        snapshot in
+        
+        if snapshot.exists() {
+            
+            for recentLoop in snapshot.value!.allValues{
+                //update Recent
+                
+                updateRecentItemFunc(recentLoop as! NSDictionary, lastMessageStrPrm: lastMessagePrm)
+            }
+            
+        }
+        
+        })
+    
+    }
+
+
+func updateRecentItemFunc(recentDictPrm: NSDictionary, lastMessageStrPrm: String){
+    
+    let dateObj = dateFormateFunc().stringFromDate(NSDate())
+    var countObj = recentDictPrm["counter"] as! Int
+    
+    if recentDictPrm["userId"] as? String != currenntUserObj.objectId {
+        countObj += 1
+    }
+    
+    let valuesDict = ["lastMessage": lastMessageStrPrm, "counter": countObj,"date":dateObj]
+    
+    firRefObj.child("Recent").child((recentDictPrm["recentId"] as? String)!).updateChildValues(valuesDict as [NSObject : AnyObject]) { (errorObj, refObj) in
+        
+        if errorObj != nil{
+            print("Error in updateRecentItemFunc ... \(errorObj)")
+        }
+    }
     
     
 }
+
+
+
+
+
 
 
 
