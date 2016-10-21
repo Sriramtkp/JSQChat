@@ -80,7 +80,10 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let indPatObj = sender as! NSIndexPath
             let chatVCObj = segue.destinationViewController as! ChatViewController
             
-            let recent = recentsArray[indPatObj.row]
+            let recentObjLocal = recentsArray[indPatObj.row]
+            
+            chatVCObj.recentDict = recentObjLocal
+            chatVCObj.chatRoomID = recentObjLocal["chatroomID"] as? String
             
         }
         
@@ -104,7 +107,8 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         chatVCobj.hidesBottomBarWhenPushed = true
         
         navigationController?.pushViewController(chatVCobj, animated: true)
-        
+        chatVCobj.withUserVar = withUser
+        chatVCobj.chatRoomID = 
         
     }
 
