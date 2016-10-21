@@ -55,6 +55,15 @@ class RecentTableViewCell: UITableViewCell {
             let withUserObj = users.data.first as! BackendlessUser
             //here withUserObj is to get get Avatar of the users 
             
+           
+//            if let avatarURL = withUserObj.getProperty("Avatar") {
+//                getImageFromURL(avatarURL as! String, result: { (image) -> Void in
+//                    self.avatarImageCell.image = image
+//                })
+//            }
+//        
+            
+            
             
         }) { (fault: Fault!) in
             
@@ -97,7 +106,7 @@ class RecentTableViewCell: UITableViewCell {
             elapsedStr = "\(minutes) \(minText)"
         }
         else if (seconds < 24 * 60 * 60){
-            let hours = Int(seconds / 60 * 60)
+            let hours = Int(seconds / (60 * 60))
             var hoursText = "hour"
             
             if hours > 1 {
@@ -106,7 +115,7 @@ class RecentTableViewCell: UITableViewCell {
             elapsedStr = "\(hours) \(hoursText)"
         }
         else {
-            let day = Int(seconds / 24 * 60 * 60)
+            let day = Int(seconds / (24 * 60 * 60))
             var dayText = "hour"
             
             if day > 1 {

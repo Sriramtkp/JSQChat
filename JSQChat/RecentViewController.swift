@@ -21,7 +21,7 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Do any additional setup after loading the view.
         
         recentsArray = [NSDictionary]()
-        
+        loadRecentRVCclass()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +45,11 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //MARK: TableView func
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return recentsArray.count
@@ -62,14 +67,48 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
-
     
-  
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        self.tableViewOutlet.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        //create user2 when all users in recent was deleted, by RestartRecentChat 
+        let recentArraySingleObj = recentsArray[indexPath.row]
+                
+        restartRecentChatFunc(recentArraySingleObj)
+        
+        
+        
+        self.performSegueWithIdentifier("chatsToChatScreen", sender: self)
+        
+    }
+    
+    //MARK: tableView Editing
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        //get singleObj of the Array
+        let recentArraySingleObj = recentsArray[indexPath.row]
+        //remove recent from array
+        recentsArray.removeAtIndex(indexPath.row)
+        //delete recent from firebase
+        deleteRecentItemFunc(recentArraySingleObj)
+        
+        
+        
+    tableViewOutlet.reloadData()
+    
+    }
+    
+    
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+        
         if segue.identifier == "chatsToChooseUserVC" {
             
             let chooseVC = segue.destinationViewController as! ChooseUserViewController
@@ -79,25 +118,20 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if segue.identifier == "chatsToChatScreen" {
             let indPatObj = sender as! NSIndexPath
             let chatVCObj = segue.destinationViewController as! ChatViewController
+            chatVCObj.hidesBottomBarWhenPushed = true
+            
             
             let recentObjLocal = recentsArray[indPatObj.row]
             
             chatVCObj.recentDict = recentObjLocal
-            chatVCObj.chatRoomID = recentObjLocal["chatroomID"] as? String
+            chatVCObj.chatRoomID = recentObjLocal["chatRoomID"] as? String
             
         }
         
-    
-    }
-    
-    
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        self.tableViewOutlet.deselectRowAtIndexPath(indexPath, animated: true)
-        self.performSegueWithIdentifier("chatsToChatScreen", sender: self)
         
     }
+
+    
     
     //MARK: customProtocol
     
@@ -112,4 +146,43 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
 
+    //MARK: loadRecnts
+    
+    func loadRecentRVCclass() {
+        
+        firRefObj.child("Recent").queryOrderedByChild("userId").queryEqualToValue(currenntUserObj.objectId).observeEventType(.Value, withBlock: {
+        snapshot in
+            self.recentsArray.removeAll()
+            
+            if snapshot.exists(){
+                
+                let sortedArray = ((snapshot.value?.allValues)! as NSArray).sortedArrayUsingDescriptors([NSSortDescriptor(key: "date", ascending: false)])
+                
+                for recentLoop in sortedArray {
+                    self.recentsArray.append(recentLoop as! NSDictionary )
+                    
+                    //add func to offline
+            /* firRefObj.child("Recent").queryOrderedByChild("chatRoomID").queryEqualToValue(recentLoop["chatRoomID"]).observeEventType(.Value, withBlock: {
+                        snapshot in
+                
+                
+                
+                    })
+*/
+                    
+                }
+                
+                
+            }
+            
+            self.tableViewOutlet.reloadData()
+        })
+        
+        
+        
+    }
+    
+    
+    
+// end of RecentViewController
 }

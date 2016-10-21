@@ -13,7 +13,7 @@ import JSQMessagesViewController.JSQMessage
 class ChatViewController: JSQMessagesViewController {
 
     
-//    var messagesArray: [JSQMessages] = []
+    var messagesArray: [JSQMessage] = []
     var objectsArray : [NSDictionary] = []
     var loadedArray : [NSDictionary] = []
 
@@ -46,7 +46,67 @@ self.senderId = currenntUserObj.objectId
         // Dispose of any resources that can be recreated.
     }
     
-
+//MARK: JSQMessageCollections func
+    
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        
+        let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
+        let dataMesge = messagesArray[indexPath.row]
+        
+        if dataMesge.senderId == currenntUserObj.objectId {
+            
+            cell.textView.textColor = UIColor.whiteColor()
+            
+        }else{
+            cell.textView.textColor = UIColor.blueColor()
+        }
+        
+        return cell
+    }
+    
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return messagesArray.count
+        
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
+        
+        let data = messagesArray[indexPath.row]
+        
+        return data
+        
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
+        
+        let data = messagesArray[indexPath.row]
+        if data.senderId == currenntUserObj.objectId {
+            return outgoingBubble
+        }else{
+            return incomingBubble
+        }
+        
+        
+    }
+    
+    //MARK: Send Buttons
+    
+    override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
+        
+        if text != nil {
+            print("send btn pressed")
+//            send our message
+        }
+        
+        
+    }
+    
+    override func didPressAccessoryButton(sender: UIButton!) {
+        print("Accessory btn pressed")
+    }
+    
     /*
     // MARK: - Navigation
 
