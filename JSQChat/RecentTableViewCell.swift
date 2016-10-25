@@ -46,7 +46,7 @@ class RecentTableViewCell: UITableViewCell {
         let withUserID = (recentFromCell.objectForKey("withUserUserID") as? String)!
         
         // get the user's avatar
-        let whereClauseObj = "objectID = '\(withUserID)"
+        let whereClauseObj = "objectID = '\(withUserID)'"
         let dataQuery = BackendlessDataQuery()
         dataQuery.whereClause = whereClauseObj
         let dataStoreObj = backendShardInstance.persistenceService.of(BackendlessUser.ofClass())

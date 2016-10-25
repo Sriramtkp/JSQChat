@@ -8,7 +8,7 @@
 
 import UIKit
 import JSQMessagesViewController
-import JSQMessagesViewController.JSQMessage
+//import JSQMessagesViewController.JSQMessage
 
 class ChatViewController: JSQMessagesViewController {
 
@@ -19,7 +19,10 @@ class ChatViewController: JSQMessagesViewController {
 
     var withUserVar: BackendlessUser?
     var recentDict: NSDictionary?
-    var chatRoomID: String?
+    var chatRoomId: String!
+    var initialLocationBool:Bool = false
+    
+    
     
     let outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
     
@@ -98,6 +101,8 @@ self.senderId = currenntUserObj.objectId
         if text != nil {
             print("send btn pressed")
 //            send our message
+            sendMessageFunc(text, datePrm: date, picturePrm: nil, locationPrm: nil)
+//            print("\(text)")
         }
         
         
@@ -113,9 +118,14 @@ self.senderId = currenntUserObj.objectId
     
     func sendMessageFunc(textPrm: String?, datePrm:NSDate, picturePrm: UIImage?, locationPrm: String? )  {
         
+        var outgoingMsgoptionalObj = OutgoingMessage?()
+        
+        
+        
         if let text = textPrm {
-         //send message
+                     //send message
             
+            outgoingMsgoptionalObj = OutgoingMessage(messagePrm: text, datePrm: datePrm, senderIDPrm: currenntUserObj.objectId!, senderNamePrm: currenntUserObj.name!, statusPrm: "Delivered", typePrm: "text")
         }
         if let pic = picturePrm {
             
@@ -124,10 +134,68 @@ self.senderId = currenntUserObj.objectId
             
         }
         
+        //playSound after sending anyType of data
+        
+        JSQSystemSoundPlayer.jsq_playMessageSentSound()
+        self.finishSendingMessage()
+        
+        outgoingMsgoptionalObj?.sendMesgOutgoingFunc(chatRoomId, itemPrm: (outgoingMsgoptionalObj!.messageDict))
         
     }
     
+    //MARK: loadMessages
     
+    func loadMessagesFuncChatVC() {
+        
+        
+        firRefObj.child(chatRoomId).observeEventType(.ChildAdded, withBlock: {
+            
+            snapshot in
+            
+            
+            if snapshot.exists() {
+                
+                let item = (snapshot.value as? NSDictionary)!
+                
+                if self.initialLocationBool{
+                    
+                    
+                }else{
+                    //add each dictionary load array
+                    
+                }
+                
+            }
+            
+            
+            
+            self.finishReceivingMessageAnimated(true)
+            
+            
+            })
+        
+        firRefObj.child(chatRoomId).observeEventType(.ChildChanged, withBlock: {
+            
+            snapshot in
+            
+            //update message
+            
+        })
+        firRefObj.child(chatRoomId).observeEventType(.ChildRemoved, withBlock: {
+            
+            snapshot in
+            
+            //delete message
+            
+        })
+        firRefObj.child(chatRoomId).observeEventType(.Value, withBlock: {
+            
+            snapshot in
+            
+            //get dictionaries
+            //create JSQMessage
+        })
+    }
     
     /*
     // MARK: - Navigation

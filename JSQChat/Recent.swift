@@ -51,7 +51,7 @@ func startChat(user1: BackendlessUser, user2: BackendlessUser) -> String {
 func createRecent(userIDPrm: String , chatRoomIDPrm : String, membersPrm: [String], withUserUserNamePrm : String, withUserUserIDPrm : String) {
     
     
-    firRefObj.child("Recent").queryOrderedByChild("chatRoomID").queryEqualToValue(chatRoomIDPrm).observeSingleEventOfType(.Value, withBlock: {snapshot in
+    firRefObj.child("Recent").queryOrderedByChild("chatRoomId").queryEqualToValue(chatRoomIDPrm).observeSingleEventOfType(.Value, withBlock: {snapshot in
     
         //bool
         
@@ -88,7 +88,7 @@ func createRecentNewItem(userIDPrm1: String , chatRoomIDPrm1: String, membersPrm
     let dateId = dateFormateFunc().stringFromDate(NSDate())
     
     
-    let recentItemObj = ["recentId" : recentId, "lastMessage" :" ", "counter" : 0 , "date" : dateId,  "userId" : userIDPrm1, "chatRoomID" :chatRoomIDPrm1, "members": membersPrm1, "withUserUserName" : withUserUserNamePrm1, "withUserUserID" : withUserUserIDPrm1 ]
+    let recentItemObj = ["recentId" : recentId, "lastMessage" :" ", "counter" : 0 , "date" : dateId,  "userId" : userIDPrm1, "chatRoomId" :chatRoomIDPrm1, "members": membersPrm1, "withUserUserName" : withUserUserNamePrm1, "withUserUserID" : withUserUserIDPrm1 ]
     
     //save to Firebase
     ref.setValue(recentItemObj){ (error, ref) -> Void in
@@ -138,7 +138,7 @@ func restartRecentChatFunc(recentDicRestartFunc : NSDictionary) {
         
         if userIdObj != currenntUserObj.objectId {
             
-            createRecent(userIdObj, chatRoomIDPrm: (recentDicRestartFunc["chatRoomID"] as? String)!, membersPrm: recentDicRestartFunc["memebers"] as! [String], withUserUserNamePrm: currenntUserObj.name, withUserUserIDPrm: currenntUserObj.objectId)
+            createRecent(userIdObj, chatRoomIDPrm: (recentDicRestartFunc["chatRoomId"] as? String)!, membersPrm: recentDicRestartFunc["memebers"] as! [String], withUserUserNamePrm: currenntUserObj.name, withUserUserIDPrm: currenntUserObj.objectId)
         }
         
     }
@@ -149,7 +149,7 @@ func restartRecentChatFunc(recentDicRestartFunc : NSDictionary) {
 
 func updateRecentFunc(chatRoomIDPrm: String, lastMessagePrm: String) {
     
-    firRefObj.child("Recent").queryOrderedByChild("chatRoomID").queryEqualToValue(chatRoomIDPrm).observeSingleEventOfType(.Value, withBlock: {
+    firRefObj.child("Recent").queryOrderedByChild("chatRoomId").queryEqualToValue(chatRoomIDPrm).observeSingleEventOfType(.Value, withBlock: {
         snapshot in
         
         if snapshot.exists() {
