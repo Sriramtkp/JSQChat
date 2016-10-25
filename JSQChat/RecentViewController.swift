@@ -124,7 +124,7 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let recentObjLocal = recentsArray[indPatObj.row]
             
             chatVCObj.recentDict = recentObjLocal
-            chatVCObj.chatRoomID = recentObjLocal["chatRoomID"] as? String
+            chatVCObj.chatRoomId = recentObjLocal["chatRoomId"] as? String
             
         }
         
@@ -142,7 +142,7 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         navigationController?.pushViewController(chatVCobj, animated: true)
         chatVCobj.withUserVar = withUser
-        chatVCobj.chatRoomID =  startChat(backendObj.userService.currentUser, user2: withUser)
+        chatVCobj.chatRoomId =  startChat(backendObj.userService.currentUser, user2: withUser)
         
     }
 
@@ -162,7 +162,7 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.recentsArray.append(recentLoop as! NSDictionary )
                     
                     //add func to offline
-            /* firRefObj.child("Recent").queryOrderedByChild("chatRoomID").queryEqualToValue(recentLoop["chatRoomID"]).observeEventType(.Value, withBlock: {
+            /* firRefObj.child("Recent").queryOrderedByChild("chatRoomId").queryEqualToValue(recentLoop["chatRoomId"]).observeEventType(.Value, withBlock: {
                         snapshot in
                 
                 
