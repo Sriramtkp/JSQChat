@@ -41,7 +41,9 @@ self.senderId = currenntUserObj.objectId
         
         self.inputToolbar.contentView.textView.placeHolder = "Type New Message"
         self.inputToolbar.contentView.textView.placeHolderTextColor = UIColor.redColor()
-    
+    loadMessagesFuncChatVC()
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -160,9 +162,11 @@ self.senderId = currenntUserObj.objectId
                 if self.initialLocationBool{
                     //get insertMesgObj
                     
-                    let insertIncomingMsgObj = insertMessageItem(item)
+                    let insertIncomingMsgObj = self.insertMessageItem(item)
                     if insertIncomingMsgObj {
-                        JSQSystemSoundPlayer.jsq_playMessageReceivedSound
+//                        JSQSystemSoundPlayer.jsq_playMessageReceivedSound
+                        JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+                        
                     }
                     self.finishReceivingMessageAnimated(true)
                     
@@ -218,23 +222,25 @@ self.senderId = currenntUserObj.objectId
             //create Messages
 
             insertMessageItem(itemLoop)
-            
-            
-            
-        }
+   }
                 
     }
     
     func insertMessageItem(itemInsertMe: NSDictionary) -> Bool {
         //call back Incoming messge func from incoming message class
         
-        let incomingMsgObj = IncomingMessage(collectionViewIncomingMessageClass_: self.collectionViewIncomingMessageClass!)
+//        let incomingMsgObj = IncomingMessage(collectionViewIncomingMessageClass_: self.collectionViewIncomingMessageClass!)
+        let incomingMsgObj = IncomingMessage(collectionViewIncomingMessageClass_: self.collectionView!)
+        
+        
+        
+        
         //get obj of incomingMsgClass
         let messageObj = incomingMsgObj.createMsgFuncIncomingMsgCls(itemInsertMe)
         //append the item to the array
         objectsArray.append(itemInsertMe)
         
-        messagesArray.append(messageObj)
+        messagesArray.append(messageObj!)
         
 return incomingMesssageFunc(itemInsertMe)
         //        return true

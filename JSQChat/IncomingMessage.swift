@@ -7,7 +7,9 @@
 //
 
 import Foundation
-import JSQMessagesCollectionView
+//import JSQMessagesCollectionView
+import JSQMessagesViewController.JSQMessagesCollectionView
+
 
 
 class IncomingMessage {
