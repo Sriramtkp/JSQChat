@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		73A70595011D08DEF8EA0D16 /* Pods_JSQChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DBC5C186E4FDBFB9FABBCA5 /* Pods_JSQChat.framework */; };
 		D91D51201DBA4C8D003D9860 /* OutgoingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91D511F1DBA4C8D003D9860 /* OutgoingMessage.swift */; };
+		D91D51221DBF173D003D9860 /* IncomingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91D51211DBF173D003D9860 /* IncomingMessage.swift */; };
 		D92023221DB8D74B004D00F4 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92023211DB8D74B004D00F4 /* Recent.swift */; };
 		D92023241DB8E77E004D00F4 /* ChooseUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92023231DB8E77E004D00F4 /* ChooseUserViewController.swift */; };
 		D92023261DB8F8AD004D00F4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92023251DB8F8AD004D00F4 /* ChatViewController.swift */; };
@@ -58,6 +59,7 @@
 		1D59B61F49034952B0B4EEA4 /* Pods-JSQChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSQChat/Pods-JSQChat.debug.xcconfig"; sourceTree = "<group>"; };
 		1DBC5C186E4FDBFB9FABBCA5 /* Pods_JSQChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSQChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D91D511F1DBA4C8D003D9860 /* OutgoingMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingMessage.swift; sourceTree = "<group>"; };
+		D91D51211DBF173D003D9860 /* IncomingMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingMessage.swift; sourceTree = "<group>"; };
 		D92023211DB8D74B004D00F4 /* Recent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
 		D92023231DB8E77E004D00F4 /* ChooseUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseUserViewController.swift; sourceTree = "<group>"; };
 		D92023251DB8F8AD004D00F4 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 		D91D511D1DBA4C24003D9860 /* Modal */ = {
 			isa = PBXGroup;
 			children = (
+				D91D51211DBF173D003D9860 /* IncomingMessage.swift */,
 				D92023211DB8D74B004D00F4 /* Recent.swift */,
 				D91D511F1DBA4C8D003D9860 /* OutgoingMessage.swift */,
 			);
@@ -444,6 +447,7 @@
 				D953B1CB1DB797C700DE746C /* RecentViewController.swift in Sources */,
 				D9A09BE31DB69AEF002F8622 /* ProgressHUD.m in Sources */,
 				D91D51201DBA4C8D003D9860 /* OutgoingMessage.swift in Sources */,
+				D91D51221DBF173D003D9860 /* IncomingMessage.swift in Sources */,
 				D92023221DB8D74B004D00F4 /* Recent.swift in Sources */,
 				D9DC434E1DB6325B008F2481 /* AppDelegate.swift in Sources */,
 			);
