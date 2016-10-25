@@ -158,11 +158,17 @@ self.senderId = currenntUserObj.objectId
                 let item = (snapshot.value as? NSDictionary)!
                 
                 if self.initialLocationBool{
+                    //get insertMesgObj
                     
+                    let insertIncomingMsgObj = insertMessageItem(item)
+                    if insertIncomingMsgObj {
+                        JSQSystemSoundPlayer.jsq_playMessageReceivedSound
+                    }
+                    self.finishReceivingMessageAnimated(true)
                     
                 }else{
                     //add each dictionary load array
-                    
+                    self.loadedArray.append(item)
                 }
                 
             }
@@ -193,9 +199,67 @@ self.senderId = currenntUserObj.objectId
             snapshot in
             
             //get dictionaries
+            
+            
             //create JSQMessage
+            
+            self.insertMessagesFunc()
+           self.finishReceivingMessageAnimated(true)
+            self.initialLocationBool = true
+
+            
         })
     }
+    
+    
+    
+    func insertMessagesFunc()  {
+        for itemLoop in loadedArray {
+            //create Messages
+
+            insertMessageItem(itemLoop)
+            
+            
+            
+        }
+                
+    }
+    
+    func insertMessageItem(itemInsertMe: NSDictionary) -> Bool {
+        //call back Incoming messge func from incoming message class
+        
+        let incomingMsgObj = IncomingMessage(collectionViewIncomingMessageClass_: self.collectionViewIncomingMessageClass!)
+        //get obj of incomingMsgClass
+        let messageObj = incomingMsgObj.createMsgFuncIncomingMsgCls(itemInsertMe)
+        //append the item to the array
+        objectsArray.append(itemInsertMe)
+        
+        messagesArray.append(messageObj)
+        
+return incomingMesssageFunc(itemInsertMe)
+        //        return true
+    }
+    
+    func incomingMesssageFunc(item: NSDictionary) -> Bool {
+        
+        if self.senderId == item["senderId"] as! String {
+            return false
+        }
+        
+        else {
+            return true
+
+        }
+    }
+
+    func outgoingMessageFunc(item: NSDictionary) -> Bool {
+        if self.senderId == item["senderId"] as! String {
+            return true
+        }else{
+            return false
+        }
+    }
+
     
     /*
     // MARK: - Navigation
