@@ -159,7 +159,7 @@ class SettingsTableViewController: UITableViewController,UINavigationControllerD
             avatarSwitchStatus = false
         }
         //save userDefaults
-        
+        saveUserDefaults()
     }
     
     
@@ -270,11 +270,16 @@ picker.dismissViewControllerAnimated(true, completion: nil)
         backendObj.userService.logout()
         //show it to the user
         
+
+        let loginVC = storyboard!.instantiateViewControllerWithIdentifier("LoginViewNav")
+        self.presentViewController(loginVC, animated: true, completion: nil)
+        
+
+        
     }
     
     
     
-
 
 
     
