@@ -28,13 +28,20 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
     var chatRoomId: String!
     var initialLocationBool:Bool = false
     
-    
+    var avatarImageMutDict: NSMutableDictionary?
+    var avatarMutDict: NSMutableDictionary?
+    var showAvatarBool: Bool = false
+    var appFirstLoadedBool: Bool?
     
     let outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
     
     let incomingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleRedColor())
     
     
+    let userDefaultsObj = NSUserDefaults.standardUserDefaults()
+    
+    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,15 +54,98 @@ self.senderId = currenntUserObj.objectId
         
         self.inputToolbar.contentView.textView.placeHolder = "Type New Message"
         self.inputToolbar.contentView.textView.placeHolderTextColor = UIColor.redColor()
+        
+        
+        if withUserVar?.objectId == nil {
+            
+            getWithUserFromRecent(recentDict!, result: { (withUser) in
+                
+                self.withUserVar = withUser
+                self.title = withUser.name
+                self.getAvatar()
+                
+            })
+        }else{
+            self.title = withUserVar?.name
+            self.getAvatar()
+        }
+        
+        
+        
+        //load firebase messages
     loadMessagesFuncChatVC()
+        
+    //end of viewDidLoad
+    }
+
+    
+    //MARK: viewWillAppear
+    override func viewWillAppear(animated: Bool) {
+        
+        loadUserDefaults()
+        
+    }
+    
+    //MARK: loadUserDefaults
+    
+    func loadUserDefaults() {
+        
+        appFirstLoadedBool = userDefaultsObj.boolForKey(kFIRSTRUN)
+        if !appFirstLoadedBool! {
+            userDefaultsObj.setBool(true, forKey: kFIRSTRUN)
+            userDefaultsObj.setBool(showAvatarBool, forKey: kAVATARSTATE)
+        }
+        
+        showAvatarBool = userDefaultsObj.boolForKey(kAVATARSTATE)
+        
+      
+        
+    }
+    
+    
+    //MARK: Clear recent Counter func
+    func clearRecentCounterFunc(chatRoomId : String) {
+        
+        
+        firRefObj.child("Recent").queryOrderedByChild("chatRoomId").queryEqualToValue(chatRoomId).observeSingleEventOfType(.Value, withBlock: {
+            
+            snapshot in
+            if snapshot.exists(){
+                for recentLoop in snapshot.value!.allValues {
+                    
+                    if recentLoop.objectForKey("userId") as? String == currenntUserObj.objectId {
+                        //clear count
+                        
+                        
+                    }
+                    
+                    }
+                
+            }
+            
+        })
         
         
     }
-
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //MARK: avatarImageData
+    override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+        
+        let mesgObj = messagesArray[indexPath.row]
+        let avatarObj = avatarImageMutDict!.objectForKey(mesgObj.senderId) as! JSQMessageAvatarImageDataSource
+        
+        return avatarObj
+        
+        
+    }
+    
     
 //MARK: JSQMessageCollections func
     
@@ -148,8 +238,10 @@ self.senderId = currenntUserObj.objectId
                 (action: UIAlertAction) -> Void in
                 
                 print("Share Location")
-                
-                self.sendMessageFunc(nil, datePrm: NSDate(), picturePrm: nil, locationPrm: "location")
+                if self.haveAccessToLocation() {
+                    self.sendMessageFunc(nil, datePrm: NSDate(), picturePrm: nil, locationPrm: "location")
+
+                }
                 
 //                self.dismissViewControllerAnimated(true, completion: nil)
             }
@@ -337,6 +429,106 @@ return incomingMesssageFunc(itemInsertMe)
         }
     }
 
+    //MARK: Location Helper func
+    
+    func haveAccessToLocation() -> Bool {
+        
+        if let _ = appDelgateObj.coordVar?.latitude {
+            return true
+        }else{
+            
+            print("no access for location")
+            return false
+        }
+        
+    }
+    
+    //MARK: getAvatar func
+    
+    func getAvatar(){
+        
+        if showAvatarBool {
+            collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(30, 30)
+            collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(30, 30)
+
+        }
+        
+        
+        //download avatars
+        avatarImageFromBackendlessUser(currenntUserObj)
+        avatarImageFromBackendlessUser(withUserVar!)
+        
+        //create avatars
+        createAvatarFunc(avatarImageMutDict)
+    }
+    
+    func getWithUserFromRecent(recentPrm:NSDictionary, result:(withUser:BackendlessUser) ->  Void)  {
+        
+        let withUserId = recentPrm["withUserUserId"] as? String
+        
+        let whereClause = "objectId = '\(withUserId!)'"
+        let dataQuery = BackendlessDataQuery()
+        dataQuery.whereClause = whereClause
+        
+        let dataStoreObj = backendObj.persistenceService.of(BackendlessUser.ofClass())
+        dataStoreObj.find(dataQuery, response: { (users: BackendlessCollection!) in
+            let withUserFirst = users.data.first as! BackendlessUser
+            result(withUser: withUserFirst)
+            
+            
+        }) { (fault: Fault!) in
+                print("error in getWithUserFromRecent func \(fault)")
+        }
+           }
+    
+    
+    func createAvatarFunc(avatarPrm: NSMutableDictionary?) {
+        
+        var currentUserAvatarObj = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "avatarPlaceholder"), diameter: 70)
+        let withUserAvatarObj = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "avatarPlaceholder"), diameter: 70)
+        
+        if let ava = avatarPrm{
+            
+            if let currentAvatarImage = ava.objectForKey(currenntUserObj.objectId) {
+                
+                currentUserAvatarObj = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(data: currentAvatarImage as! NSData), diameter: 70)
+                self.collectionView?.reloadData()
+            }
+            }
+        
+        avatarMutDict = [currenntUserObj.objectId : currentUserAvatarObj, withUserVar!.objectId!:withUserAvatarObj]
+        
+    }
+    
+    func avatarImageFromBackendlessUser(userPrm: BackendlessUser){
+        
+        if let imageLink = userPrm.getProperty("Avatar") {
+            
+            getImageFromURL(imageLink as! String, result: { (imagePrm) in
+                
+                let imageDataObj = UIImageJPEGRepresentation(imagePrm!, 1.0)
+                
+                
+                if self.avatarImageMutDict != nil{
+                    
+                    self.avatarImageMutDict!.removeObjectForKey(userPrm.objectId)
+                    self.avatarImageMutDict!.setObject(imageDataObj!, forKey: userPrm.objectId)
+                    
+                }else{
+                    self.avatarImageMutDict = [userPrm.objectId! : imageDataObj!]
+                }
+                self.createAvatarFunc(self.avatarImageMutDict)
+                
+            })
+            
+            
+        }
+        
+        
+    }
+    
+    
+    
     
     
     //MARK: UIIMagePicker delegate funcs
@@ -376,6 +568,64 @@ return incomingMesssageFunc(itemInsertMe)
         
         
     }
+    
+    //MARK: JSQCollectionView Delegates
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+        
+        if indexPath.item % 3 == 0 {
+            let mesgObj = messagesArray[indexPath.row]
+            
+            return JSQMessagesTimestampFormatter.sharedFormatter().attributedTimestampForDate(mesgObj.date)
+        }
+        
+        return nil
+        
+    }
+    
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        
+        if indexPath.item % 3 == 0 {
+            
+            return kJSQMessagesCollectionViewCellLabelHeightDefault
+            
+        }
+        return 0.0
+        
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellBottomLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+        
+        let msgObj = objectsArray[indexPath.row]
+        
+        let statusObj = msgObj["status"] as! String
+        
+        
+        if indexPath.row == (messagesArray.count - 1){
+            
+            return NSAttributedString(string: statusObj)
+        }else{
+            return NSAttributedString(string: "")
+        }
+
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellBottomLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        
+        
+        
+        if outgoingMessageFunc(objectsArray[indexPath.row])  {
+            //            return kJSQMessageCollectionViewCellLabelHeightDefault
+            return kJSQMessagesCollectionViewCellLabelHeightDefault
+        }else{
+            return 0.0
+        }
+        
+    }
+    
+    
+    
     
     
    
