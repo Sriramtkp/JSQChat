@@ -17,6 +17,7 @@
 		D94C171E1DBFB80C0056D0E9 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94C171D1DBFB80C0056D0E9 /* Camera.swift */; };
 		D94C17201DC064200056D0E9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94C171F1DC064200056D0E9 /* MapViewController.swift */; };
 		D94C17221DC079390056D0E9 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94C17211DC079390056D0E9 /* SettingsTableViewController.swift */; };
+		D94C17241DC0BB740056D0E9 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94C17231DC0BB740056D0E9 /* Avatar.swift */; };
 		D953B1C71DB781D200DE746C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D953B1C61DB781D200DE746C /* GoogleService-Info.plist */; };
 		D953B1C91DB796C500DE746C /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D953B1C81DB796C500DE746C /* RecentTableViewCell.swift */; };
 		D953B1CB1DB797C700DE746C /* RecentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D953B1CA1DB797C700DE746C /* RecentViewController.swift */; };
@@ -70,6 +71,7 @@
 		D94C171D1DBFB80C0056D0E9 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		D94C171F1DC064200056D0E9 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D94C17211DC079390056D0E9 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		D94C17231DC0BB740056D0E9 /* Avatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Avatar.swift; sourceTree = "<group>"; };
 		D953B1C61DB781D200DE746C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D953B1C81DB796C500DE746C /* RecentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		D953B1CA1DB797C700DE746C /* RecentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				D92023211DB8D74B004D00F4 /* Recent.swift */,
 				D91D511F1DBA4C8D003D9860 /* OutgoingMessage.swift */,
 				D94C171D1DBFB80C0056D0E9 /* Camera.swift */,
+				D94C17231DC0BB740056D0E9 /* Avatar.swift */,
 			);
 			name = Modal;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				D9A09BEA1DB69FEC002F8622 /* LoginViewController.swift in Sources */,
 				D94379DD1DB65B0400268EEA /* BackendlessSub-Bridging-Header.m in Sources */,
 				D92023261DB8F8AD004D00F4 /* ChatViewController.swift in Sources */,
+				D94C17241DC0BB740056D0E9 /* Avatar.swift in Sources */,
 				D92023241DB8E77E004D00F4 /* ChooseUserViewController.swift in Sources */,
 				D9A09BE81DB69FDA002F8622 /* RegisterViewController.swift in Sources */,
 				D9A09BE51DB69E61002F8622 /* WelcomeViewController.swift in Sources */,

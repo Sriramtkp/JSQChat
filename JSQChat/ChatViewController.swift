@@ -119,8 +119,11 @@ self.senderId = currenntUserObj.objectId
     override func didPressAccessoryButton(sender: UIButton!) {
         print("Accessory btn pressed")
         
-        dispatch_async(dispatch_get_main_queue(), {
-            
+//        dispatch_async(dispatch_get_main_queue(), {
+        
+        let cameraObj = Camera(delegateProtocol_: self)
+        
+        
             let alert = UIAlertController(title: nil, message: nil , preferredStyle: .ActionSheet)
             
             let takePhoto = UIAlertAction(title: "Take Photo", style: .Default) {
@@ -128,7 +131,7 @@ self.senderId = currenntUserObj.objectId
                 
                 print("Take Photo")
                 
-                Camera.PresentPhotoCamera(self, canEdit: true)
+                cameraObj.PresentPhotoCamera(self, canEdit: true)
                 
                 
 //                self.dismissViewControllerAnimated(true, completion: nil)
@@ -137,7 +140,7 @@ self.senderId = currenntUserObj.objectId
                 (action: UIAlertAction) -> Void in
                 
                 print("Photo Library")
-                Camera.PresentPhotoLibrary(self, canEdit: true)
+                cameraObj.PresentPhotoLibrary(self, canEdit: true)
 //                self.dismissViewControllerAnimated(true, completion: nil)
             }
             
@@ -164,7 +167,7 @@ self.senderId = currenntUserObj.objectId
             alert.view.setNeedsLayout()
             self.presentViewController(alert, animated: true, completion: nil)
             
-        })
+//         })
         
     }
     
