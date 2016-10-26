@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsTableViewController: UITableViewController {
+class SettingsTableViewController: UITableViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
      //MARK:outlets
     @IBOutlet weak var headerViewForTableView: UIView!
@@ -42,7 +42,8 @@ class SettingsTableViewController: UITableViewController {
         self.imageViewUser.layer.cornerRadius = self.imageViewUser.frame.size.width/2
         self.imageViewUser.layer.masksToBounds = true
         
-        
+        loadUserDefaults()
+        updateUI()
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
@@ -88,7 +89,11 @@ class SettingsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        return 0
+        if section == 0 {
+            return 0
+        }else{
+            return 25.0
+        }
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -104,9 +109,45 @@ class SettingsTableViewController: UITableViewController {
     @IBAction func didClickAvatarImageBtn(sender: UIButton) {
         
         
-        
+        changeAvatarPhotoFunc()
     }
     
+    //MARK: Change Avatar Photo
+    func changeAvatarPhotoFunc() {
+        
+        let cameraObj = Camera(delegateProtocol_: self)
+        
+        
+        
+        let alert = UIAlertController(title: nil, message: nil , preferredStyle: .ActionSheet)
+        
+        let takePhoto = UIAlertAction(title: "Take Photo", style: .Default) {
+            (action: UIAlertAction) -> Void in
+            
+            print("Take Photo")
+            cameraObj.PresentPhotoCamera(self, canEdit: true)
+            
+        }
+        let sharePhoto = UIAlertAction(title: "Photo Library", style: .Default) {
+            (action: UIAlertAction) -> Void in
+            
+            print("Photo Library")
+            cameraObj.PresentPhotoLibrary(self, canEdit: true)
+            
+        }        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .Cancel) {
+            (action: UIAlertAction) -> Void in
+            
+            print("Cancel")
+            
+        }
+        alert.addAction(takePhoto)
+        alert.addAction(sharePhoto)
+         alert.addAction(cancelButton)
+        alert.view.setNeedsLayout()
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
     
     @IBAction func avatarSwitchAction(switchState: UISwitch) {
         
@@ -144,6 +185,98 @@ class SettingsTableViewController: UITableViewController {
         
     }
     
+    
+    //MARK: UIImagePickerView Delegate
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+         let imageVar = info[UIImagePickerControllerEditedImage] as! UIImage
+        uploadAvatar(imageVar) { (imageLink) in
+            
+            let propertiesVar = ["Avatar" : imageLink!]
+            currenntUserObj.updateProperties(propertiesVar)
+            
+            backendObj.userService.update(currenntUserObj, response: { (updateUser) in
+                
+                print("updateUser is \(updateUser)")
+                
+                }, error: { (fault: Fault!) in
+                    print("error in imagePicker in SettinfTBVC \(fault)")
+            })
+            
+            
+        }
+picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    //MARK: updateUI
+    
+    func updateUI() {
+        
+        userNameLabel.text = currenntUserObj.name
+        avatarSwitch.setOn(avatarSwitchStatus, animated: false)
+        
+        if let imageLink = currenntUserObj.getProperty("Avatar"){
+            
+            getImageFromURL(imageLink as! String, result: { (image) in
+                
+                self.imageViewUser.image = image
+                
+            })
+            
+            
+        }
+        
+    }
+    
+    //MARK: didselectRow
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.section == 1 && indexPath.row == 0 {
+            showLogoutAlert()
+        }
+    }
+    
+    //MARK: Logout Alert and Func
+    
+    func showLogoutAlert() {
+        
+        let alert = UIAlertController(title: nil, message: nil , preferredStyle: .ActionSheet)
+        
+        let saveAction = UIAlertAction(title: "Logout", style: .Destructive) {
+            (action: UIAlertAction) -> Void in
+            //logoutFunc
+            print("Logout btn pressed")
+            self.logoutFunc()
+            
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel){
+            (action: UIAlertAction) -> Void in
+            print("Cancel btn pressed")
+        }
+        
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        alert.view.setNeedsLayout()
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
+    func logoutFunc()  {
+        
+        backendObj.userService.logout()
+        //show it to the user
+        
+    }
+    
+    
+    
+
+
+
     
     
     

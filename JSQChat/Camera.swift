@@ -11,7 +11,17 @@ import MobileCoreServices
 
 class Camera  {
     
-    class func PresentPhotoLibrary(target : ChatViewController, canEdit: Bool)  {
+    
+    var delegateProtocol: protocol<UINavigationControllerDelegate, UIImagePickerControllerDelegate>?
+    
+    
+    init(delegateProtocol_:protocol<UINavigationControllerDelegate, UIImagePickerControllerDelegate>?){
+        delegateProtocol = delegateProtocol_
+    }
+    
+    
+    
+     func PresentPhotoLibrary(target : UIViewController, canEdit: Bool)  {
         
         if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) && !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum) {
             
@@ -54,12 +64,12 @@ class Camera  {
         
         
         imagePickerObj.allowsEditing = canEdit
-        imagePickerObj.delegate = target
+        imagePickerObj.delegate = delegateProtocol
         target.presentViewController(imagePickerObj, animated: true, completion: nil)
             }
     
     
-    class func PresentPhotoCamera(target: ChatViewController, canEdit: Bool) {
+     func PresentPhotoCamera(target: UIViewController, canEdit: Bool) {
         
         if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
             return
@@ -93,7 +103,7 @@ class Camera  {
         }
         
         imagePickerCameraObj.allowsEditing = canEdit
-        imagePickerCameraObj.delegate = target
+        imagePickerCameraObj.delegate = delegateProtocol
         target.presentViewController(imagePickerCameraObj, animated: true, completion: nil)
         
         

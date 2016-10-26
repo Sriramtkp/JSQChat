@@ -365,11 +365,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="a35-2A-cMu">
                             <rect key="frame" x="0.0" y="176" width="600" height="170"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hyw-RY-AG3">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatarPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Hyw-RY-AG3">
                                     <rect key="frame" x="263" y="22" width="75" height="75"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="75" id="5w7-3t-3Uk"/>
@@ -392,7 +393,6 @@
                                         <constraint firstAttribute="width" constant="75" id="0Bn-ns-9MN"/>
                                         <constraint firstAttribute="height" constant="75" id="gov-wc-odo"/>
                                     </constraints>
-                                    <state key="normal" title="Button"/>
                                     <connections>
                                         <action selector="didClickAvatarImageBtn:" destination="jyT-cO-DJH" eventType="touchUpInside" id="dMb-j2-wg4"/>
                                     </connections>
@@ -497,13 +497,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Logout" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yf9-D9-nd5">
-                                                    <rect key="frame" x="8" y="8" width="584" height="40"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logout" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yf9-D9-nd5">
+                                                    <rect key="frame" x="8" y="8" width="584" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="Yf9-D9-nd5" secondAttribute="bottom" constant="5" id="7bm-KG-6wa"/>
+                                                <constraint firstItem="Yf9-D9-nd5" firstAttribute="top" secondItem="Tf7-qI-SI2" secondAttribute="top" constant="8" id="Smc-Lj-pxa"/>
+                                                <constraint firstItem="Yf9-D9-nd5" firstAttribute="leading" secondItem="Tf7-qI-SI2" secondAttribute="leading" constant="8" id="XB2-GF-sOl"/>
+                                                <constraint firstAttribute="trailing" secondItem="Yf9-D9-nd5" secondAttribute="trailing" constant="8" id="lIv-ik-u8R"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -758,4 +764,7 @@
             <point key="canvasLocation" x="3006" y="-1096"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="avatarPlaceholder" width="250" height="250"/>
+    </resources>
 </document>
