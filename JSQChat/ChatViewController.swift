@@ -10,8 +10,13 @@ import UIKit
 import JSQMessagesViewController
 //import JSQMessagesViewController.JSQMessage
 
-class ChatViewController: JSQMessagesViewController {
+class ChatViewController: JSQMessagesViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
+//    /after getting location
+    let appDelgateObj = UIApplication.sharedApplication().delegate as! AppDelegate
+    let ref = firRefObj.child("Message")
+    
+    
     
     var messagesArray: [JSQMessage] = []
     var objectsArray : [NSDictionary] = []
@@ -112,8 +117,61 @@ self.senderId = currenntUserObj.objectId
     
     override func didPressAccessoryButton(sender: UIButton!) {
         print("Accessory btn pressed")
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            let alert = UIAlertController(title: nil, message: nil , preferredStyle: .ActionSheet)
+            
+            let takePhoto = UIAlertAction(title: "Take Photo", style: .Default) {
+                (action: UIAlertAction) -> Void in
+                
+                print("Take Photo")
+                
+                Camera.PresentPhotoCamera(self, canEdit: true)
+                
+                
+//                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            let sharePhoto = UIAlertAction(title: "Photo Library", style: .Default) {
+                (action: UIAlertAction) -> Void in
+                
+                print("Photo Library")
+                Camera.PresentPhotoLibrary(self, canEdit: true)
+//                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            
+            let shareLocation = UIAlertAction(title: "Share Location", style: .Default) {
+                (action: UIAlertAction) -> Void in
+                
+                print("Share Location")
+                
+                self.sendMessageFunc(nil, datePrm: NSDate(), picturePrm: nil, locationPrm: "location")
+                
+//                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            let cancelButton = UIAlertAction(title: "Cancel", style: .Cancel) {
+                (action: UIAlertAction) -> Void in
+                
+                print("Cancel")
+                
+//                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            alert.addAction(takePhoto)
+            alert.addAction(sharePhoto)
+            alert.addAction(shareLocation)
+            alert.addAction(cancelButton)
+            alert.view.setNeedsLayout()
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        })
+        
     }
     
+  //MARK: UIACtion Sheet for Sharing and Choosing message
+func displayAlert(titleMsg: String, MessageTxt: String) {
+    
+    
+  }
     
     
     //MARK: sendMessage callBackFunc
@@ -131,8 +189,18 @@ self.senderId = currenntUserObj.objectId
         }
         if let pic = picturePrm {
             
+            let imageDataObj = UIImageJPEGRepresentation(pic, 1.0)
+            
+            outgoingMsgoptionalObj = OutgoingMessage(messagePrm: "Picture", picturePrm: imageDataObj!, datePrm: datePrm, senderIDPrm: currenntUserObj.objectId!, senderNamePrm: currenntUserObj.name!, statusPrm: "Delivered", typePrm: "picture")
+            
+            
         }
-        if let loc = locationPrm {
+        if let _ = locationPrm {
+            
+            let latObj: NSNumber = NSNumber(double: (appDelgateObj.coordVar?.latitude)!)
+            let longiObj: NSNumber = NSNumber(double: (appDelgateObj.coordVar?.longitude)!)
+            
+            outgoingMsgoptionalObj = OutgoingMessage(messagePrm: "Location", latPrm: latObj, longiPrm: longiObj, datePrm: datePrm, senderIDPrm: currenntUserObj.objectId!, senderNamePrm: currenntUserObj.name!, statusPrm: "Delivered", typePrm: "location")
             
         }
         
@@ -220,7 +288,6 @@ self.senderId = currenntUserObj.objectId
     func insertMessagesFunc()  {
         for itemLoop in loadedArray {
             //create Messages
-
             insertMessageItem(itemLoop)
    }
                 
@@ -267,6 +334,20 @@ return incomingMesssageFunc(itemInsertMe)
     }
 
     
+    
+    //MARK: UIIMagePicker delegate funcs
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        let pictureInfo = info[UIImagePickerControllerEditedImage] as! UIImage
+
+        // callBack sendMessage
+        
+        self.sendMessageFunc(nil, datePrm: NSDate(), picturePrm: pictureInfo, locationPrm: nil)
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+    
+    
     /*
     // MARK: - Navigation
 
@@ -277,4 +358,9 @@ return incomingMesssageFunc(itemInsertMe)
     }
     */
 
+    
+    
+    
+    
+    
 }
