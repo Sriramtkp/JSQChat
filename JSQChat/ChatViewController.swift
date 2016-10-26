@@ -9,6 +9,7 @@
 import UIKit
 import JSQMessagesViewController
 //import JSQMessagesViewController.JSQMessage
+import IDMPhotoBrowser
 
 class ChatViewController: JSQMessagesViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
@@ -347,16 +348,55 @@ return incomingMesssageFunc(itemInsertMe)
         
     }
     
+    //MARK: JSQ Delegates
     
-    /*
+    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!) {
+        
+        let object = objectsArray[indexPath.row]
+        
+        if object["type"] as! String == "picture" {
+            
+            let msgObj = messagesArray[indexPath.row]
+            let mediaItemobj = msgObj.media as! JSQPhotoMediaItem
+            let photos = IDMPhoto.photosWithImages([mediaItemobj.image!])
+            let browserObj = IDMPhotoBrowser(photos:photos)
+            
+        self.presentViewController(browserObj, animated: true, completion: nil)
+            
+        }
+            
+        
+        if object["type"] as! String == "location" {
+            self.performSegueWithIdentifier("chatToMap", sender: indexPath)
+        }
+        
+        
+        
+    }
+    
+    
+   
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "chatToMap" {
+            let indexPath = sender as! NSIndexPath
+            let messageobj = messagesArray[indexPath.row]
+        let mediaItem = messageobj.media as! JSQLocationMediaItem
+            
+            let mapViewObj = segue.destinationViewController as! MapViewController
+            mapViewObj.locationMapObj = mediaItem.location
+            
+        }
+        
+        
+        
+        
+        
+        
     }
-    */
+   
 
     
     
