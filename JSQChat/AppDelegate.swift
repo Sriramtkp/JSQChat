@@ -12,7 +12,7 @@ import FirebaseDatabase
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
 
@@ -23,6 +23,9 @@ let SECRET_KEY = "EC60F383-FC29-8D17-FF8F-6F03F86DD900"
     let backendlessAppDelob = Backendless.sharedInstance()
     
 
+    var locationManager: CLLocationManager?
+    var coordVar: CLLocationCoordinate2D?
+    
     
     
     
@@ -59,12 +62,57 @@ let SECRET_KEY = "EC60F383-FC29-8D17-FF8F-6F03F86DD900"
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    
+    locMngrStart()
+    
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        locMngrStop()
+        
     }
 
 
-}
+    
+    
+    //MARK: Location start & Stops
+    
+    func locMngrStart() {
+        print("init Location from locMngrStart()")
+        if locationManager == nil {
+            locationManager = CLLocationManager()
+            locationManager!.delegate = self
+            locationManager!.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager!.requestWhenInUseAuthorization()
+            locationManager!.startUpdatingLocation()
+            
+        }
+        locationManager!.startUpdatingLocation()
+        
+        
+    }
+    
+    func locMngrStop()  {
+        
+    }
+
+
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        
+        coordVar = newLocation.coordinate
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    //end of Appdelegate
+       }
 
