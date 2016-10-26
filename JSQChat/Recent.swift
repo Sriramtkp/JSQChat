@@ -10,6 +10,16 @@ import Foundation
 import FirebaseDatabase
 import Firebase
 
+
+//MARK: Constants
+public let kAVATARSTATE = "avatarState"
+public let kFIRSTRUN = "firstrun"
+
+
+
+
+
+
 var firRefObj = FIRDatabase.database().reference()
 
 
