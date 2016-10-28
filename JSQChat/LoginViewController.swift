@@ -58,7 +58,7 @@ class LoginViewController: UIViewController {
             dispatch_async(dispatch_get_main_queue(), {
                 
                 self.displayAlert("Missing Field(s)", MessageTxt: "Email and Password requiered")
-                
+            
             })
 
             
@@ -73,6 +73,9 @@ class LoginViewController: UIViewController {
             
             self.loginTxtFld.text = ""
             self.passwordTtFld.text = ""
+            
+            registerUserDeviceID()
+            
             
             print("Logged in")
             //segue to Recent Vc

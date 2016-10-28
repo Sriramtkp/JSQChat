@@ -10,6 +10,7 @@ import UIKit
 import JSQMessagesViewController
 //import JSQMessagesViewController.JSQMessage
 import IDMPhotoBrowser
+//import ProgressHUD
 
 class ChatViewController: JSQMessagesViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
@@ -46,8 +47,8 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
         super.viewDidLoad()
 
 
-self.senderId = currenntUserObj.objectId
-        self.senderDisplayName = currenntUserObj.name
+self.senderId = backendShrdInstance.userService.currentUser.objectId
+        self.senderDisplayName = backendShrdInstance.userService.currentUser.name
     
         collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
         collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
@@ -78,6 +79,11 @@ self.senderId = currenntUserObj.objectId
     //end of viewDidLoad
     }
 
+     func  viewWillDisppear(animated: Bool){
+        clearRecentCounterFunc(chatRoomId)
+        ref.removeAllObservers()
+        
+    }
     
     //MARK: viewWillAppear
     override func viewWillAppear(animated: Bool) {
@@ -85,6 +91,11 @@ self.senderId = currenntUserObj.objectId
         loadUserDefaults()
         
     }
+    //MARK: viewWillAppear
+
+    
+    
+    
     
     //MARK: loadUserDefaults
     
@@ -113,14 +124,13 @@ self.senderId = currenntUserObj.objectId
             if snapshot.exists(){
                 for recentLoop in snapshot.value!.allValues {
                     
-                    if recentLoop.objectForKey("userId") as? String == currenntUserObj.objectId {
+                    if recentLoop.objectForKey("userId") as? String == backendShrdInstance.userService.currentUser.objectId {
                         //clear count
                         
                         
                     }
                     
                     }
-                
             }
             
         })
@@ -155,7 +165,7 @@ self.senderId = currenntUserObj.objectId
         let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
         let dataMesge = messagesArray[indexPath.row]
         
-        if dataMesge.senderId == currenntUserObj.objectId {
+        if dataMesge.senderId == backendShrdInstance.userService.currentUser.objectId {
             
             cell.textView.textColor = UIColor.whiteColor()
             
@@ -183,7 +193,7 @@ self.senderId = currenntUserObj.objectId
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
         
         let data = messagesArray[indexPath.row]
-        if data.senderId == currenntUserObj.objectId {
+        if data.senderId == backendShrdInstance.userService.currentUser.objectId {
             return outgoingBubble
         }else{
             return incomingBubble
@@ -281,13 +291,13 @@ func displayAlert(titleMsg: String, MessageTxt: String) {
         if let text = textPrm {
                      //send message
             
-            outgoingMsgoptionalObj = OutgoingMessage(messagePrm: text, datePrm: datePrm, senderIDPrm: currenntUserObj.objectId!, senderNamePrm: currenntUserObj.name!, statusPrm: "Delivered", typePrm: "text")
+            outgoingMsgoptionalObj = OutgoingMessage(messagePrm: text, datePrm: datePrm, senderIDPrm: backendShrdInstance.userService.currentUser.objectId!, senderNamePrm: backendShrdInstance.userService.currentUser.name!, statusPrm: "Delivered", typePrm: "text")
         }
         if let pic = picturePrm {
             
             let imageDataObj = UIImageJPEGRepresentation(pic, 1.0)
             
-            outgoingMsgoptionalObj = OutgoingMessage(messagePrm: "Picture", picturePrm: imageDataObj!, datePrm: datePrm, senderIDPrm: currenntUserObj.objectId!, senderNamePrm: currenntUserObj.name!, statusPrm: "Delivered", typePrm: "picture")
+            outgoingMsgoptionalObj = OutgoingMessage(messagePrm: "Picture", picturePrm: imageDataObj!, datePrm: datePrm, senderIDPrm: backendShrdInstance.userService.currentUser.objectId!, senderNamePrm: backendShrdInstance.userService.currentUser.name!, statusPrm: "Delivered", typePrm: "picture")
             
             
         }
@@ -296,7 +306,7 @@ func displayAlert(titleMsg: String, MessageTxt: String) {
             let latObj: NSNumber = NSNumber(double: (appDelgateObj.coordVar?.latitude)!)
             let longiObj: NSNumber = NSNumber(double: (appDelgateObj.coordVar?.longitude)!)
             
-            outgoingMsgoptionalObj = OutgoingMessage(messagePrm: "Location", latPrm: latObj, longiPrm: longiObj, datePrm: datePrm, senderIDPrm: currenntUserObj.objectId!, senderNamePrm: currenntUserObj.name!, statusPrm: "Delivered", typePrm: "location")
+            outgoingMsgoptionalObj = OutgoingMessage(messagePrm: "Location", latPrm: latObj, longiPrm: longiObj, datePrm: datePrm, senderIDPrm: backendShrdInstance.userService.currentUser.objectId!, senderNamePrm: backendShrdInstance.userService.currentUser.name!, statusPrm: "Delivered", typePrm: "location")
             
         }
         
@@ -411,7 +421,7 @@ return incomingMesssageFunc(itemInsertMe)
     
     func incomingMesssageFunc(item: NSDictionary) -> Bool {
         
-        if self.senderId == item["senderId"] as! String {
+        if backendShrdInstance.userService.currentUser.objectId == item["senderId"] as! String {
             return false
         }
         
@@ -422,7 +432,7 @@ return incomingMesssageFunc(itemInsertMe)
     }
 
     func outgoingMessageFunc(item: NSDictionary) -> Bool {
-        if self.senderId == item["senderId"] as! String {
+        if backendShrdInstance.userService.currentUser.objectId == item["senderId"] as! String {
             return true
         }else{
             return false
@@ -455,7 +465,7 @@ return incomingMesssageFunc(itemInsertMe)
         
         
         //download avatars
-        avatarImageFromBackendlessUser(currenntUserObj)
+        avatarImageFromBackendlessUser(backendShrdInstance.userService.currentUser)
         avatarImageFromBackendlessUser(withUserVar!)
         
         //create avatars
@@ -470,7 +480,7 @@ return incomingMesssageFunc(itemInsertMe)
         let dataQuery = BackendlessDataQuery()
         dataQuery.whereClause = whereClause
         
-        let dataStoreObj = backendObj.persistenceService.of(BackendlessUser.ofClass())
+        let dataStoreObj = backendShrdInstance.persistenceService.of(BackendlessUser.ofClass())
         dataStoreObj.find(dataQuery, response: { (users: BackendlessCollection!) in
             let withUserFirst = users.data.first as! BackendlessUser
             result(withUser: withUserFirst)
@@ -489,14 +499,14 @@ return incomingMesssageFunc(itemInsertMe)
         
         if let ava = avatarPrm{
             
-            if let currentAvatarImage = ava.objectForKey(currenntUserObj.objectId) {
+            if let currentAvatarImage = ava.objectForKey(backendShrdInstance.userService.currentUser.objectId) {
                 
                 currentUserAvatarObj = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(data: currentAvatarImage as! NSData), diameter: 70)
                 self.collectionView?.reloadData()
             }
             }
         
-        avatarMutDict = [currenntUserObj.objectId : currentUserAvatarObj, withUserVar!.objectId!:withUserAvatarObj]
+        avatarMutDict = [backendShrdInstance.userService.currentUser.objectId : currentUserAvatarObj, withUserVar!.objectId!:withUserAvatarObj]
         
     }
     

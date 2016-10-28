@@ -9,7 +9,7 @@
 import UIKit
 
 class RecentTableViewCell: UITableViewCell {
-    let backendShardInstance = Backendless.sharedInstance()
+//    let backendShardInstance = Backendless.sharedInstance()
     
     
     
@@ -49,19 +49,19 @@ class RecentTableViewCell: UITableViewCell {
         let whereClauseObj = "objectID = '\(withUserID)'"
         let dataQuery = BackendlessDataQuery()
         dataQuery.whereClause = whereClauseObj
-        let dataStoreObj = backendShardInstance.persistenceService.of(BackendlessUser.ofClass())
+        let dataStoreObj = backendShrdInstance.persistenceService.of(BackendlessUser.ofClass())
         dataStoreObj.find(dataQuery, response: { (users: BackendlessCollection!) in
             
             let withUserObj = users.data.first as! BackendlessUser
             //here withUserObj is to get get Avatar of the users 
             
            
-//            if let avatarURL = withUserObj.getProperty("Avatar") {
-//                getImageFromURL(avatarURL as! String, result: { (image) -> Void in
-//                    self.avatarImageCell.image = image
-//                })
-//            }
-//        
+            if let avatarURL = withUserObj.getProperty("Avatar") {
+                getImageFromURL(avatarURL as! String, result: { (image) -> Void in
+                    self.avatarImageCell.image = image
+                })
+            }
+        
             
             
             

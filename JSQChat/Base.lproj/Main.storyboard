@@ -132,7 +132,13 @@
                             <constraint firstAttribute="trailing" secondItem="dcS-v7-xPz" secondAttribute="trailing" constant="20" id="rZ9-HO-nu4"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="e4Z-05-1ui"/>
+                    <navigationItem key="navigationItem" id="e4Z-05-1ui">
+                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="bNN-DE-6aA">
+                            <connections>
+                                <action selector="uploadPhotoCameraBtn:" destination="QMA-QT-dxx" id="mby-Kj-23q"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="emailTxtFld" destination="zVD-Ao-XlJ" id="vAX-f5-LvZ"/>
                         <outlet property="passwordTxtFld" destination="dcS-v7-xPz" id="WhR-7I-o8x"/>
