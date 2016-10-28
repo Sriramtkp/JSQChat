@@ -23,8 +23,8 @@ public let kFIRSTRUN = "firstrun"
 var firRefObj = FIRDatabase.database().reference()
 
 
-let backendObj = Backendless.sharedInstance()
-let currenntUserObj = backendObj.userService.currentUser
+let backendShrdInstance = Backendless.sharedInstance()
+//let currenntUserObj = backendRecentObj.userService.currentUser
 //user1 is the Current User
 
 
@@ -146,9 +146,9 @@ func restartRecentChatFunc(recentDicRestartFunc : NSDictionary) {
     
     for userIdObj in recentDicRestartFunc["memebers"] as! [String] {
         
-        if userIdObj != currenntUserObj.objectId {
+        if userIdObj != backendShrdInstance.userService.currentUser.objectId {
             
-            createRecent(userIdObj, chatRoomIDPrm: (recentDicRestartFunc["chatRoomId"] as? String)!, membersPrm: recentDicRestartFunc["memebers"] as! [String], withUserUserNamePrm: currenntUserObj.name, withUserUserIDPrm: currenntUserObj.objectId)
+            createRecent(userIdObj, chatRoomIDPrm: (recentDicRestartFunc["chatRoomId"] as? String)!, membersPrm: recentDicRestartFunc["memebers"] as! [String], withUserUserNamePrm: backendShrdInstance.userService.currentUser.name, withUserUserIDPrm: backendShrdInstance.userService.currentUser.objectId)
         }
         
     }
@@ -182,7 +182,7 @@ func updateRecentItemFunc(recentDictPrm: NSDictionary, lastMessageStrPrm: String
     let dateObj = dateFormateFunc().stringFromDate(NSDate())
     var countObj = recentDictPrm["counter"] as! Int
     
-    if recentDictPrm["userId"] as? String != currenntUserObj.objectId {
+    if recentDictPrm["userId"] as? String != backendShrdInstance.userService.currentUser.objectId {
         countObj += 1
     }
     
@@ -197,6 +197,50 @@ func updateRecentItemFunc(recentDictPrm: NSDictionary, lastMessageStrPrm: String
     
     
 }
+
+
+//MARK: clearRecentCounterItem timer
+
+func ClearRecentCount(chatRoomId: String) {
+    
+    
+    firRefObj.child("Recent").queryOrderedByChild("chatRoomId").queryEqualToValue(chatRoomId).observeSingleEventOfType(.Value, withBlock: {
+        
+        snapshot in
+        if snapshot.exists(){
+            for recentLoop in snapshot.value!.allValues {
+                if recentLoop.objectForKey("userId") as? String == backendShrdInstance.userService.currentUser.objectId{
+                    //clear recentCounter
+                    
+                clearRecentCounterItem(recentLoop as! NSDictionary)
+                }
+            
+            
+            
+            }
+        }
+    })
+ }
+
+func clearRecentCounterItem(recentClearItem:NSDictionary) {
+//    firRefObj.child("Recent").child(recentClearItem["recentId"] as? String).updateChildValues(["counter": 0]) { (error, ref) in
+//        if error != nil {
+//            print("error in clearRecentCounterItem\(error)")
+//        }
+//        
+//    }
+    
+    firRefObj.child("Recent").child((recentClearItem["recentId"] as? String)!).updateChildValues(["counter" : 0]) { (error, refObj) in
+        if error != nil {
+            
+            print("\(error)")
+        }
+    }
+    
+   }
+
+
+
 
 
 

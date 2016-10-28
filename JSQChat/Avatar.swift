@@ -17,7 +17,7 @@ func uploadAvatar( image: UIImage, result:(imageLink: String? ) ->Void ) {
     
     let fileName = "Img" + dateStr + ".jpeg"
     
-   backendObj.fileService.upload(fileName, content: imageData, response: { (file) in
+   backendShrdInstance.fileService.upload(fileName, content: imageData, response: { (file) in
     //success
     
     result(imageLink: file.fileURL)

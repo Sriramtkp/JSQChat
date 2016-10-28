@@ -94,14 +94,14 @@ class ChooseUserViewController: UIViewController, UITableViewDelegate, UITableVi
     func loadUsers() {
     
         
-        let whereClauseObj = "objectId != '\(currenntUserObj.objectId)'"
+        let whereClauseObj = "objectId != '\(backendShrdInstance.userService.currentUser.objectId)'"
         
       let dataQueryObj = BackendlessDataQuery()
         dataQueryObj.whereClause = whereClauseObj
         
         
         
-        let dataStoreObj = backendObj.persistenceService.of(BackendlessUser.ofClass())
+        let dataStoreObj = backendShrdInstance.persistenceService.of(BackendlessUser.ofClass())
         dataStoreObj.find(dataQueryObj, response: { (users : BackendlessCollection!) in
             
             self.userArray = users.data as! [BackendlessUser]

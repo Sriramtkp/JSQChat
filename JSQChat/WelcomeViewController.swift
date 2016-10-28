@@ -10,8 +10,8 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
 
-    let backendShrdInstance = Backendless.sharedInstance()
-    var currentUser: BackendlessUser?
+//    let backendShrdInstance = Backendless.sharedInstance()
+//    var currentUser: BackendlessUser?
     
     
     
@@ -19,11 +19,11 @@ class WelcomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         backendShrdInstance.userService.setStayLoggedIn(true)
-        currentUser = backendShrdInstance.userService.currentUser
+//        currentUser = backendShrdInstance.userService.currentUser
         
         
         
-        if currentUser != nil {
+        if backendShrdInstance.userService.currentUser != nil {
             
             dispatch_async(dispatch_get_main_queue(), {
              let storyboardID = UIStoryboard(name: "Main", bundle: nil)

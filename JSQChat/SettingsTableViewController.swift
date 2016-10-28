@@ -194,9 +194,9 @@ class SettingsTableViewController: UITableViewController,UINavigationControllerD
         uploadAvatar(imageVar) { (imageLink) in
             
             let propertiesVar = ["Avatar" : imageLink!]
-            currenntUserObj.updateProperties(propertiesVar)
+            backendShrdInstance.userService.currentUser!.updateProperties(propertiesVar)
             
-            backendObj.userService.update(currenntUserObj, response: { (updateUser) in
+            backendShrdInstance.userService.update(backendShrdInstance.userService.currentUser, response: { (updateUser) in
                 
                 print("updateUser is \(updateUser)")
                 
@@ -214,10 +214,10 @@ picker.dismissViewControllerAnimated(true, completion: nil)
     
     func updateUI() {
         
-        userNameLabel.text = currenntUserObj.name
+        userNameLabel.text = backendShrdInstance.userService.currentUser.name
         avatarSwitch.setOn(avatarSwitchStatus, animated: false)
         
-        if let imageLink = currenntUserObj.getProperty("Avatar"){
+        if let imageLink = backendShrdInstance.userService.currentUser.getProperty("Avatar"){
             
             getImageFromURL(imageLink as! String, result: { (image) in
                 
@@ -267,9 +267,10 @@ picker.dismissViewControllerAnimated(true, completion: nil)
     
     func logoutFunc()  {
         
-        backendObj.userService.logout()
+        backendShrdInstance.userService.logout()
         //show it to the user
-        
+        // from ReisterUser
+        removeUserDeviceID()
 
         let loginVC = storyboard!.instantiateViewControllerWithIdentifier("LoginViewNav")
         self.presentViewController(loginVC, animated: true, completion: nil)

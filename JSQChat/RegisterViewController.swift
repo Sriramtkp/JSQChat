@@ -8,14 +8,14 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     @IBOutlet weak var emailTxtFld: UITextField!
     @IBOutlet weak var passwordTxtFld: UITextField!
     @IBOutlet weak var userNameTxtFld: UITextField!
     
     
-    var backendShrdInstance = Backendless.sharedInstance()
+//    var backendShrdInstance = Backendless.sharedInstance()
     var newUserObj: BackendlessUser?
     
     
@@ -52,8 +52,7 @@ class RegisterViewController: UIViewController {
             userNameObj = userNameTxtFld.text
             
             // callBack  registerToBckendless
-            
-            registerToBckendless(self.emailObj!, userNamePrm: self.userNameObj!, passwdPrm: self.passwordObj!, avatarImagePrm:self.avatarImgObj)
+            registerToBackendless(self.emailObj!, username: self.userNameObj!, password: self.passwordObj!, avatarImage:self.avatarImgObj)
         }else{
             
             //Alert to user
@@ -69,7 +68,7 @@ class RegisterViewController: UIViewController {
     
     
     //MARK: Backendless registration func
-    
+   /*
     func registerToBckendless(emailPrm: String, userNamePrm: String, passwdPrm: String, avatarImagePrm: UIImage?)  {
         
         if avatarImagePrm == nil {
@@ -100,18 +99,20 @@ class RegisterViewController: UIViewController {
         }
         
     }
-    
+    */
     //MARK: Login func
     func loginUser (emailLoginPrm: String, usernameLoginPrm: String, passwdLoginPrm:String  ) {
         
         backendShrdInstance.userService.login(emailObj, password: passwordObj
             , response: { (users: BackendlessUser!) in
+               
+                
+                registerUserDeviceID()
+                
                 
                 //segure to Recent VC
                 
-                
-                
-                let storyboardID = UIStoryboard(name: "Main", bundle: nil)
+        let storyboardID = UIStoryboard(name: "Main", bundle: nil)
     let chatVC = storyboardID.instantiateViewControllerWithIdentifier("ChatTabBar") as! UITabBarController
         
                 self.presentViewController(chatVC, animated: true, completion: nil)
@@ -152,10 +153,115 @@ alert.addAction(cancelAction)
   }
     
     
+    //MARK: CameraBtn
+    @IBAction func uploadPhotoCameraBtn(sender: UIBarButtonItem) {
+        
+        
+        let cameraObj = Camera(delegateProtocol_: self)
+        
+        
+        let alert = UIAlertController(title: nil, message: nil , preferredStyle: .ActionSheet)
+        
+        let takePhoto = UIAlertAction(title: "Take Photo", style: .Default) {
+            (action: UIAlertAction) -> Void in
+            
+            print("Take Photo")
+            cameraObj.PresentPhotoCamera(self, canEdit: true)
+            
+        }
+        let sharePhoto = UIAlertAction(title: "Photo Library", style: .Default) {
+            (action: UIAlertAction) -> Void in
+            
+            print("Photo Library")
+            cameraObj.PresentPhotoLibrary(self, canEdit: true)
+            
+        }
+        let cancelButton = UIAlertAction(title: "Cancel", style: .Cancel) {
+            (action: UIAlertAction) -> Void in
+            
+            print("Cancel")
+            
+        }
+        alert.addAction(takePhoto)
+        alert.addAction(sharePhoto)
+        alert.addAction(cancelButton)
+        alert.view.setNeedsLayout()
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
     
+    //MARK: imagePicker Delegate
     
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        self.avatarImgObj = (info[UIImagePickerControllerEditedImage] as! UIImage)
+    picker.dismissViewControllerAnimated(true, completion: nil)
+    }
     
+    //MARK: Backendless user registration
+    
+    func registerToBackendless(email: String, username: String, password: String, avatarImage:UIImage?) {
+        
+        if avatarImage == nil{
+            newUserObj!.setProperty("Avatar", object: "")
+        }else{
+            
+            uploadAvatar(avatarImage!, result: { (imageLink) in
+                
+                let properties = ["Avatar" : imageLink!]
+                
+                backendShrdInstance.userService.currentUser.updateProperties(properties)
+     backendShrdInstance.userService.update(backendShrdInstance.userService.currentUser, response: { (updatedUser) in
+                    
+                    }, error: { (fault: Fault!) in
+                        print("error in uploadAvatar\(fault)")
+                })
+        })
+            
+        }
+        
+        
+        newUserObj?.email = email
+        newUserObj?.name = username
+        newUserObj?.password = password
+        
+        backendShrdInstance.userService.registering(newUserObj, response: { (registeredUser: BackendlessUser!) in
+            
+//            ProgressHUD.dismiss()
+//            ProgressHUD.dismiss()
+            
+            
+            //login new user
+            self.loginUser(email, usernameLoginPrm: username, passwdLoginPrm: password)
+            
+            self.emailTxtFld.text = ""
+            self.userNameTxtFld.text = ""
+            self.passwordTxtFld.text = ""
+            
+            
+        }) { (fault:Fault!) in
+                print("error in registerToBackendless \(fault)")
+        }
+        
+    }
     
     
 //MARK: end of RegisterViewController
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

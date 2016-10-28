@@ -142,15 +142,15 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         navigationController?.pushViewController(chatVCobj, animated: true)
         chatVCobj.withUserVar = withUser
-        chatVCobj.chatRoomId =  startChat(backendObj.userService.currentUser, user2: withUser)
+        chatVCobj.chatRoomId =  startChat(backendShrdInstance.userService.currentUser, user2: withUser)
         
     }
 
-    //MARK: loadRecnts
+    //MARK: loadRecents from Firebae
     
     func loadRecentRVCclass() {
         
-        firRefObj.child("Recent").queryOrderedByChild("userId").queryEqualToValue(currenntUserObj.objectId).observeEventType(.Value, withBlock: {
+        firRefObj.child("Recent").queryOrderedByChild("userId").queryEqualToValue(backendShrdInstance.userService.currentUser.objectId).observeEventType(.Value, withBlock: {
         snapshot in
             self.recentsArray.removeAll()
             
@@ -162,14 +162,11 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.recentsArray.append(recentLoop as! NSDictionary )
                     
                     //add func to offline
-            /* firRefObj.child("Recent").queryOrderedByChild("chatRoomId").queryEqualToValue(recentLoop["chatRoomId"]).observeEventType(.Value, withBlock: {
+           firRefObj.child("Recent").queryOrderedByChild("chatRoomId").queryEqualToValue(recentLoop["chatRoomId"]).observeEventType(.Value, withBlock: {
                         snapshot in
-                
-                
-                
+                                
                     })
-*/
-                    
+
                 }
                 
                 

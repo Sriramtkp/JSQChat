@@ -10,7 +10,9 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-
+             
+       
+       
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
@@ -20,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 let SECRET_KEY = "EC60F383-FC29-8D17-FF8F-6F03F86DD900"
     let VERSION_NO = "v1"
     
-    let backendlessAppDelob = Backendless.sharedInstance()
+//    let backendlessAppDelob = Backendless.sharedInstance()
     
 
     var locationManager: CLLocationManager?
@@ -36,7 +38,7 @@ let SECRET_KEY = "EC60F383-FC29-8D17-FF8F-6F03F86DD900"
         
         FIRApp.configure()
         
-        backendlessAppDelob.initApp(APP_ID, secret: SECRET_KEY, version: VERSION_NO)
+        backendShrdInstance.initApp(APP_ID, secret: SECRET_KEY, version: VERSION_NO)
         
         FIRDatabase.database().persistenceEnabled = true
         

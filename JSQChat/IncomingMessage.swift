@@ -97,7 +97,7 @@ class IncomingMessage {
     
     func returnOutgoingStatusFromUser(senderIdPrm:String) -> Bool {
         
-        if senderIdPrm == currenntUserObj.objectId {
+        if senderIdPrm == backendShrdInstance.userService.currentUser.objectId {
             //outgoing Message
             return true
         }else{
